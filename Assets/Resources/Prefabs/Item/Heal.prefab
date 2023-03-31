@@ -100,6 +100,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   curType: 0
   value: 1
+  moved: 0
+  speed: 0
+  buffTimer: {fileID: 5388301140137702288, guid: 6a64d27d3335b0842b291311b0656a3f, type: 3}
+  scriptBT: {fileID: 0}
 --- !u!58 &4716253120285379392
 CircleCollider2D:
   m_ObjectHideFlags: 0

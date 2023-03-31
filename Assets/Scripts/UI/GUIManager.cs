@@ -32,6 +32,7 @@ public class GUIManager : MonoSingleton<MonoBehaviour>
     [Header("PlayerUI")]
     public GameObject hpLayout;
     public GameObject heart;
+    public GameObject buffBar;
 
     public Text txt_Gold;
     public float f_delay;
@@ -40,6 +41,7 @@ public class GUIManager : MonoSingleton<MonoBehaviour>
     
     [Header("List")]
     public List<GameObject> hpList = new List<GameObject>();
+    public List<GameObject> buffTimer = new List<GameObject>();
     // Setting / Scene / Result
 
     #region Main

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <LangVersion>9.0</LangVersion>
+    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{C6C80CB4-945F-3066-6454-FB740B1D82C1}</ProjectGuid>
+    <ProjectGuid>{51B1639C-539C-BAD6-72EB-54DD8F7C6EEC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -53,9 +53,6 @@
     <UnityVersion>2021.3.16f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Assets\Scripts\UI\UI_SkillScene.cs" />
     <Compile Include="Assets\Scripts\StageManager.cs" />
     <Compile Include="Assets\Scripts\DeadLine.cs" />
@@ -66,11 +63,13 @@
     <Compile Include="Assets\Scripts\UI\UI_Distance.cs" />
     <Compile Include="Assets\Scripts\UI\UI_Result.cs" />
     <Compile Include="Assets\Scripts\UI\SlideButton.cs" />
+    <Compile Include="Assets\Scripts\UI\UI_Star.cs" />
     <Compile Include="Assets\Scripts\Companion.cs" />
     <Compile Include="Assets\Scripts\SavePoint.cs" />
     <Compile Include="Assets\Scripts\followCamera.cs" />
     <Compile Include="Assets\Scripts\UI\UI_Status.cs" />
     <Compile Include="Assets\Scripts\Enemy.cs" />
+    <Compile Include="Assets\Scripts\UI\UI_Stage.cs" />
     <Compile Include="Assets\Scripts\UI\UI_Block.cs" />
     <Compile Include="Assets\Scripts\UI\GUIManager.cs" />
     <Compile Include="Assets\Scripts\PlayerControl.cs" />
@@ -83,8 +82,7 @@
     <Compile Include="Assets\Scripts\Manager\DBLoader.cs" />
     <Compile Include="Assets\Scripts\Gold.cs" />
     <Compile Include="Assets\Scripts\PlayerStatus.cs" />
-    <Compile Include="Assets\Scripts\UI\UI_Stage.cs" />
-    <Compile Include="Assets\Scripts\UI\UI_Star.cs" />
+    <Compile Include="Assets\Scripts\BuffTimer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

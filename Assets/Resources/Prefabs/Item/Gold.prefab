@@ -103,6 +103,8 @@ MonoBehaviour:
   value: 1
   moved: 0
   speed: 10
+  buffTimer: {fileID: 5388301140137702288, guid: 6a64d27d3335b0842b291311b0656a3f, type: 3}
+  scriptBT: {fileID: 0}
 --- !u!114 &9084051278420803249
 MonoBehaviour:
   m_ObjectHideFlags: 0

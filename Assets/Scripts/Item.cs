@@ -18,6 +18,9 @@ public class Item : MonoBehaviour
     public int value;
     public bool moved;
     public float speed;
+
+    public GameObject buffTimer;
+    public BuffTimer scriptBT;
     //public float duration;
     //public float timer;
 
@@ -54,10 +57,12 @@ public class Item : MonoBehaviour
 
             case ItemType.Invincible:// 무적
                 go_Collider.GetComponent<PlayerEffect>().Activate_Effect(PlayerEffect.E_effect.ItemInvin, value);
+                CreateTimer(curType);
                 break;
 
             case ItemType.Aviation:// 비행 + 무적 + 자석(골드만?)
                 go_Collider.GetComponent<PlayerEffect>().Activate_Effect(PlayerEffect.E_effect.Avitaton, value);
+                CreateTimer(curType);
                 break;
 
             case ItemType.ChangeCoin:
@@ -69,6 +74,22 @@ public class Item : MonoBehaviour
         }
 
         Destroy(this.gameObject);
+    }
+
+    void CreateTimer(ItemType itemType)
+    {
+        scriptBT = buffTimer.GetComponent<BuffTimer>();
+        scriptBT.buffTime = value;
+        switch (itemType)
+        {
+            case ItemType.Invincible:
+                scriptBT.type = "invincible";
+                break;
+            case ItemType.Aviation:
+                scriptBT.type = "aviation";
+                break;
+        }
+        var prefabBuffTimer = Instantiate(buffTimer, GUIManager.instance.buffBar.transform);
     }
     //public void SetType(ItemType itemtype)
     //{
