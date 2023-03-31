@@ -508,10 +508,10 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 190
+    m_FontSize: 140
     m_FontStyle: 1
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 1
     m_MaxSize: 230
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -519,7 +519,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 1
+  m_Text: 1-1
 --- !u!1 &8449545744952526909
 GameObject:
   m_ObjectHideFlags: 0
@@ -604,6 +604,7 @@ MonoBehaviour:
     name: 
     getStar: 0
     percent: 0
+    repeat: 0
     isClear: 0
     first_Gold: 0
     repeat_Gold: 0

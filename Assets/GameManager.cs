@@ -7,9 +7,23 @@ using UnityEngine.SceneManagement;
 [Serializable]
 public struct Status
 {
+    public int Lv_HP;
+    public int Lv_ATK;
+    public int Lv_DEF;
     public int hp;
     public int atk;
     public int def_cnt;
+}
+[Serializable]
+public struct Enhance
+{
+    public int stat;
+    public int need_Gold;
+    public void Set(int stat, int gold)
+    {
+        this.stat = stat;
+        this.need_Gold = gold;
+    }
 }
 // chapter cnt 에 대한 변수 Define
 [Serializable]
@@ -65,6 +79,12 @@ public class GameManager : MonoBehaviour
     public Status status;
     public int n_Gold;
 
+    public Enhance[] en_HP;
+    public Enhance[] en_ATK;
+    public Enhance[] en_DEF;
+    // 강화를 누른다 > 능력치 종류 확인한다 > 플레이어의 해당 능력치 Lv 을 호출한다.
+    // Lv(idx) 값에 따른 비용(gold) 및 수치(stat)을 가져온다.
+
     [Header("맵")]
     public Stage[] stages;  // List 변경
     public int ply_Chapter; // clear Chapter?
@@ -76,8 +96,11 @@ public class GameManager : MonoBehaviour
     {
         get { return string.Format($"{chapter}-{stage}"); }
     }
-    public Func<int, int, int> GetIndex = (ch, stg) => ((ch - 1)* 5) + (stg - 1);
-    //public PlusStatus plusStat = new PlusStatus();
+
+    // inline 함수 //
+    public Func<int, int, int> GetIndex = (ch, stg) => ((ch - 1) * 5) + (stg - 1);
+    //public static Func<int, int, int> TestFunc = (ch, stg) => ((ch - 1) * 5) + (stg - 1);
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -86,10 +109,12 @@ public class GameManager : MonoBehaviour
             Debug.Log("GameManager_Awake");
             instance = this;
             player_prefab = Resources.Load<GameObject>("Prefabs/Player");
+            
             Init_StageInfo();
+            Init_EnhanceInfo();
 
             SceneManager.sceneLoaded += LoadScene;
-            SceneManager.sceneUnloaded += UnLoadScene;
+            //SceneManager.sceneUnloaded += UnLoadScene;
 
             DontDestroyOnLoad(this.gameObject);
         }
@@ -118,33 +143,67 @@ public class GameManager : MonoBehaviour
         stages[4] = new Stage();
         stages[4].Init(4, 0, 0, false, 2800, 2500, 1);
     }
+    void Init_EnhanceInfo()
+    {
+        // HP //
+        en_HP = new Enhance[5];
+        en_HP[0].Set(1, 2000);
+        en_HP[1].Set(1, 4000);
+        en_HP[2].Set(1, 6000);
+        en_HP[3].Set(1, 8000);
+        en_HP[4].Set(1, 10000);
+        // ATK //
+        en_ATK = new Enhance[5];
+        en_ATK[0].Set(100, 200);
+        en_ATK[1].Set(100, 350);
+        en_ATK[2].Set(200, 550);
+        en_ATK[3].Set(200, 850);
+        en_ATK[4].Set(200, 1000);
+        // DEF //
+        en_DEF = new Enhance[5];
+        en_DEF[0].Set(1, 5000);
+        en_DEF[1].Set(1, 10000);
+        en_DEF[2].Set(1, 15000);
+        en_DEF[3].Set(1, 20000);
+        en_DEF[4].Set(1, 25000);
+    }
+    public Enhance GetEnhanceInfo(E_Status type)
+    {
+        Enhance en = new Enhance();
+        switch (type)
+        {
+            case E_Status.HP:
+                en = en_HP[status.Lv_HP];
+                break;
+            case E_Status.ATK:
+                en = en_ATK[status.Lv_ATK];
+                break;
+            case E_Status.DEF:
+                en = en_DEF[status.Lv_DEF];
+                break;
+        }
+        return en;
+    }
+    public string GetStatusInfo(E_Status type)
+    {
+        string info = null;
+        switch (type)
+        {
+            case E_Status.HP:
+                info = string.Format($"Lv.{status.Lv_HP} HP {status.hp}");
+                break;
+            case E_Status.ATK:
+                info = string.Format($"Lv.{status.Lv_ATK} ATK {status.atk}");
+                break;
+            case E_Status.DEF:
+                info = string.Format($"Lv.{status.Lv_DEF} DEF {status.def_cnt}");
+                break;
+        }
+        return info;
+    }
     private void Start()
     {
         Debug.Log("GameManager_Start");
-
-        //invincibleTimer = invincibleTime;
-        //aviationTimer = aviationTime;
-        //magneticTimer = magneticTime;
-    }
-    public void UpgradeStatus(int type)
-    {
-        switch(type)
-        {
-            case 0:
-                if (n_Gold >= 100)
-                {
-                    StartCoroutine(GUIManager.instance.NumberAnimation(n_Gold - 100, n_Gold, E_VALUE.GOLD));
-                    n_Gold -= 100;
-                    status.hp++;
-                }
-                break;
-            case 1:
-                status.atk++;
-                break;
-            case 2:
-                status.def_cnt++;
-                break;
-        }
     }
     public void GetChapter(int _chapter)
     {
@@ -162,27 +221,25 @@ public class GameManager : MonoBehaviour
             case "UI":
                 //plusStat.Init();
                 break;
-            //case "Stage":
             default:
-                SetPlayer();
-                //SetGame();//
+                SetPlayer();// 굳이 동적 할당 해야할까? //
                 GUIManager.instance.SetUI();
                 break;
         }
     }
-    public void UnLoadScene(Scene scene)//, Scene nextScene)
-    {
-        //Debug.Log(scene.name + "를 UnLoad 합니다.");
-        switch (scene.name)//Load 하는 Scene 이름.
-        {
-            case "UI":
+    //public void UnLoadScene(Scene scene)//, Scene nextScene)
+    //{
+    //    //Debug.Log(scene.name + "를 UnLoad 합니다.");
+    //    switch (scene.name)//Load 하는 Scene 이름.
+    //    {
+    //        case "UI":
 
-                break;
-            default:
-                
-                break;
-        }
-    }
+    //            break;
+    //        default:
+
+    //            break;
+    //    }
+    //}
     public void SetPlayer()
     {
         // Player Prefab 생성 및 배치.

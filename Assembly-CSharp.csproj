@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\UI\UI_SkillScene.cs" />
+    <Compile Include="Assets\Scripts\QuestManager.cs" />
     <Compile Include="Assets\Scripts\StageManager.cs" />
     <Compile Include="Assets\Scripts\DeadLine.cs" />
     <Compile Include="Assets\Scripts\Manager\MonoSingleton.cs" />
@@ -86,7 +87,7 @@
     <Compile Include="Assets\Scripts\Gold.cs" />
     <Compile Include="Assets\Scripts\BuffTimer.cs" />
     <Compile Include="Assets\Scripts\PlayerStatus.cs" />
-    <Compile Include="Assets\Scripts\QuestManager.cs" />
+    <Compile Include="Assets\Scripts\UI\UI_Enhance.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

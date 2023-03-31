@@ -15,35 +15,43 @@ public enum E_VALUE
 public class GUIManager : MonoSingleton<MonoBehaviour>
 {
     public static GUIManager instance;
-    public enum E_Scene { TITLE, CHAPTER, STAGE, PREPARE, PLAY }
-    public E_Scene scene;
+    public enum E_Scene { TITLE, CHAPTER, STAGE, PREPARE, PLAY } // class 밖으로 뺴내기.
+    E_Scene cur_Scene;
+    [Header("_화면_")]
     public List<GameObject> list_Scene;
     public enum E_Window { Setting_Title, Setting_Play, Skill, Clear, Fail, GameOver, Pause }
+    [Header("_창_")]
     public List<GameObject> list_Window;
+
+    [Header("_챕터&스테이지 관리_")]
     public UI_BlockManager[] ui_block_Managers;
-    public UI_Distance ui_Dist;
-    [Header("GameUI")]
-    //public TMP_Text damage;
-    public TMP_Text rescue;
-    //public TMP_Text gold;
+    
+    [Header("_조작_")]
     public Button jumpBtn;
     public Button slideBtn;
 
-    [Header("PlayerUI")]
+    [Header("_플레이어_")]
+    public Text txt_Atk;
+    // UI_HP //
     public GameObject hpLayout;
     public GameObject heart;
-    public GameObject buffBar;
-
-    public Text txt_Gold;
-    public float f_delay;
-    public Text txt_Map;
-    public Text txt_Atk;
-    
-    [Header("List")]
     public List<GameObject> hpList = new List<GameObject>();
+    // UI_Shield //
+    // 추가
+    
+    [Header("_편의성_")]
+    public UI_Distance ui_Dist;
+    // UI Buff //
+    public float f_delay;
+    public GameObject buffBar;
     public List<GameObject> buffTimer = new List<GameObject>();
-    // Setting / Scene / Result
 
+    [Header("_강화_")]
+    public Text txt_Gold;
+    public UI_Enhance[] ui_Enhances;
+
+    public Text txt_Map; // 제거 예정 //
+    
     #region Main
     private void Awake()
     {
@@ -69,7 +77,6 @@ public class GUIManager : MonoSingleton<MonoBehaviour>
     void Start()
     {
         SceneChange(E_Scene.TITLE);
-        //HPBarInit();
     }
 
     // Update is called once per frame
@@ -82,7 +89,7 @@ public class GUIManager : MonoSingleton<MonoBehaviour>
     {
         for (int i = 0; i < list_Scene.Count; i++)
         {
-            if ((int)scene == i)
+            if ((int)cur_Scene == i)
                 list_Scene[i].SetActive(true);
             else
                 list_Scene[i].SetActive(false);
@@ -90,7 +97,7 @@ public class GUIManager : MonoSingleton<MonoBehaviour>
     }
     void SceneChange(E_Scene scene)
     {
-        this.scene = scene;
+        this.cur_Scene = scene;
         switch (scene)
         {
             case E_Scene.CHAPTER:
@@ -103,12 +110,24 @@ public class GUIManager : MonoSingleton<MonoBehaviour>
                 else ui_block_Managers[1].Activate_To(GameManager.instance.ply_Stage);
                 break;
             case E_Scene.PREPARE:
-                string format = string.Format("{0:#,##0} G", GameManager.instance.n_Gold);
-                txt_Gold.text = format;
+                // Gold UI 초기화 //
+                txt_Gold.text = string.Format("{0:#,##0} G", GameManager.instance.n_Gold);
+                
+                // Enhance UI 초기화 //
+                for (int i = 0; i < 3; i++) ui_Enhances[i].Init();
                 break;
             case E_Scene.PLAY:
+                //SceneManager.LoadScene(GameManager.instance.map);
+                // GUIManager.instance.SetUI();
+                // Map 제목 제거 //
                 txt_Map.text = GameManager.instance.map;
                 txt_Atk.text = string.Format("{0:#,###}", GameManager.instance.status.atk);
+                // HP UI 초기화 //
+
+                // Shield UI 초기화 //
+
+                // ATK UI 초기화 //
+
                 break;
         }
         ShowScene();
@@ -123,25 +142,22 @@ public class GUIManager : MonoSingleton<MonoBehaviour>
         Event_Next();
         //DontDestroyOnLoad(GameManager.instance.gameObject);
     }
-    public void Event_Upgrade(int type)
-    {
-        GameManager.instance.UpgradeStatus(type);
-    }
     public void Event_Back()
     {
-        int num = (int)scene;
+        int num = (int)cur_Scene;
         num--;
         SceneChange((E_Scene)num);
     }
     public void Event_GoTo(int num)
     {
+        if (SceneManager.GetActiveScene().name != "UI") SceneManager.LoadScene("UI");
         SceneChange((E_Scene)num);
         Event_Quit_Window();
         //Event_OffResult();
     }
     public void Event_Next()
     {
-        int num = (int)scene;
+        int num = (int)cur_Scene;
         num++;
         SceneChange((E_Scene)num);
     }
@@ -195,26 +211,6 @@ public class GUIManager : MonoSingleton<MonoBehaviour>
         }
         Time.timeScale = 1f;
     }
-    //public void Event_OffResult()
-    //{
-    //    list_Window[2].SetActive(false);
-    //}
-    public void Event_StopGame()
-    {
-        int idx = (int)E_Window.Pause;
-        list_Window[idx].SetActive(!list_Window[idx].activeSelf);
-        if (list_Window[idx].activeSelf) Time.timeScale = 0f;
-        else Time.timeScale = 1f;
-    }
-
-    //public void HPBarInit()
-    //{
-    //    for (int i = 0; i < GameManager.instance.go_Player.GetComponent<PlayerStatus>().HP; i++)
-    //    {
-    //        var prefabHP = Instantiate(heart, hpLayout.transform);
-    //        hpList.Add(prefabHP);
-    //    }
-    //}
 
     public void UIUpdate()
     {
@@ -275,21 +271,6 @@ public class GUIManager : MonoSingleton<MonoBehaviour>
                 hpList.Add(prefabHP);
             }
         }
-    }
-
-    public void DamageUI()
-    {
-        //damage.text = ($"Damage : {GameManager.instance.go_Player.GetComponent<PlayerStatus>().ATK}");
-    }
-
-    public void RescueUI()
-    {
-        //rescue.text = ($"Rescue : {GameManager.instance.rescue}");
-    }
-
-    public void GoldUI()
-    {
-        //gold.text = ($"Gold : {GameManager.instance.n_Gold}");
     }
     #endregion
 
