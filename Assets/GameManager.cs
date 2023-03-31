@@ -19,7 +19,9 @@ public class Stage
     public string name;
     public int getStar;
     public float percent;
+    public bool repeat;
     public bool isClear;
+    // public int clearGold
     public int first_Gold;
     public int repeat_Gold;
     public int bossHP;
@@ -40,10 +42,13 @@ public class Stage
         // 그냥 String 값을 읽어 오는게 더 좋을까?
         this.repeat_Gold = first_Gold - 1000;
     }
-    // Pecent 도 Start 와 똑같이 구현하기
-    public void SetStar(int cnt)// Star
+    public void Update_Info(int cnt, float percent, bool kill)
     {
+        repeat = true;
         if (cnt > getStar) this.getStar = cnt;
+        if (isClear != kill) isClear = true;
+        if (kill) this.percent = 1;
+        else if (percent > this.percent) this.percent = percent;     
     }
 }
 
@@ -61,7 +66,7 @@ public class GameManager : MonoBehaviour
     public int n_Gold;
 
     [Header("맵")]
-    public Stage[] stages;
+    public Stage[] stages;  // List 변경
     public int ply_Chapter; // clear Chapter?
     public int ply_Stage; // clear Stage?
     public int chapter;
@@ -189,7 +194,7 @@ public class GameManager : MonoBehaviour
         // 업그레이드 된 능력치 Prefab에 적용
         go_Player.GetComponent<PlayerStatus>().InitStatus(status);
     }
-    public void StageClear()
+    public void StageClear() // GameFinish GameEnd
     {
         //GUIManager.instance.Event_ShowResult();
         StageManager.instance.CheckQuest();
@@ -209,7 +214,7 @@ public class GameManager : MonoBehaviour
     }
     void OpenStage()
     {
-        if(stage != 5 && (ply_Chapter == chapter))
+        if(stage != 5 && (ply_Chapter == chapter) && stage == ply_Stage)
         {
             ply_Stage++;
         }

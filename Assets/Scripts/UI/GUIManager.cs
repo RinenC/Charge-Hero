@@ -168,40 +168,37 @@ public class GUIManager : MonoSingleton<MonoBehaviour>
         int idx = (int)E_Window.Skill;
         list_Window[idx].SetActive(!list_Window[idx].activeSelf);
     }
-    public void Event_ShowResult(int cnt, bool clear = true)// bool clear = true / false
+    public void Event_ShowResult(int cnt, int gold, bool clear = true)// bool clear = true / false
     {
         switch (clear)
         {
             case true:
-                StartCoroutine(ShowResultWindow((int)E_Window.Clear, cnt));
+                StartCoroutine(ShowResultWindow((int)E_Window.Clear, cnt, gold));
                 break;
             case false:
                 list_Window[(int)E_Window.GameOver].SetActive(true);
-                StartCoroutine(ShowResultWindow((int)E_Window.Fail, cnt));
+                StartCoroutine(ShowResultWindow((int)E_Window.Fail, cnt, gold));
                 break;
         }
     }
-    IEnumerator ShowResultWindow(int idx, int cnt)
+    IEnumerator ShowResultWindow(int idx, int cnt, int gold)
     {
         yield return new WaitForSeconds(1);
         list_Window[idx].SetActive(true);
-        list_Window[idx].GetComponent<UI_Result>().Set(cnt);
+        list_Window[idx].GetComponent<UI_Result>().Set(cnt, gold);
     }
     public void Event_Quit_Window()
     {
-        //GameObject selectedObject = EventSystem.current.currentSelectedGameObject;
-        //GameObject go_Parent = selectedObject.transform.parent.gameObject;
-        //go_Parent.SetActive(false);
         for(int i = 0; i < list_Window.Count; i++)
         {
             list_Window[i].SetActive(false);
         }
         Time.timeScale = 1f;
     }
-    public void Event_OffResult()
-    {
-        list_Window[2].SetActive(false);
-    }
+    //public void Event_OffResult()
+    //{
+    //    list_Window[2].SetActive(false);
+    //}
     public void Event_StopGame()
     {
         int idx = (int)E_Window.Pause;
