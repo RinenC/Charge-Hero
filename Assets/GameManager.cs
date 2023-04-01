@@ -25,6 +25,25 @@ public struct Enhance
         this.need_Gold = gold;
     }
 }
+[Serializable]
+public class Chapter
+{
+    int stars;
+    int need_Cnt = 2;
+    public int total
+    {
+        get { for (int i = 0; i < stages.Count; i++) stars += stages[i].getStar; return stars; }
+    }
+    public bool isEnough { get { return (total >= need_Cnt); } }
+    public List<Stage> stages;
+    public void Link_with(Stage stage)
+    {
+        if(stages == null) stages = new List<Stage>();
+        stages.Add(stage);
+        Debug.Log("Link_with . . ." + stage.name);
+    }
+}
+
 // chapter cnt 에 대한 변수 Define
 [Serializable]
 public class Stage
@@ -41,7 +60,7 @@ public class Stage
     public int bossHP;
     public int questType;
     // 생성자를 만들자.
-    public void Init(int idx, int getStar, float per, bool clear, int gold, int HP, int questType)
+    public void Init(int idx, string stage, int getStar, float per, bool clear, int gold, int HP, int questType)
     {
         this.idx = idx;
         this.getStar = getStar;
@@ -51,7 +70,7 @@ public class Stage
         this.bossHP= HP;
         this.questType = questType;
 
-        this.name = string.Format($"{(idx / 5) + 1}-{idx % 5 + 1}");
+        this.name = stage;
         // idx 로 계산해서 할당하는 것 보다
         // 그냥 String 값을 읽어 오는게 더 좋을까?
         this.repeat_Gold = first_Gold - 1000;
@@ -86,6 +105,7 @@ public class GameManager : MonoBehaviour
     // Lv(idx) 값에 따른 비용(gold) 및 수치(stat)을 가져온다.
 
     [Header("맵")]
+    public Chapter[] chapters;
     public Stage[] stages;  // List 변경
     public int ply_Chapter; // clear Chapter?
     public int ply_Stage; // clear Stage?
@@ -129,19 +149,29 @@ public class GameManager : MonoBehaviour
         stages = new Stage[5];
         // 데이터를 할당한다.
         stages[0] = new Stage();
-        stages[0].Init(0, 0, 0, false, 2000, 500, 1);
+        stages[0].Init(0, "1-1", 0, 0, false, 2000, 500, 1);
         
         stages[1] = new Stage();
-        stages[1].Init(1, 0, 0, false, 2200, 1000, 1);
+        stages[1].Init(1, "1-2", 0, 0, false, 2200, 1000, 1);
         
         stages[2] = new Stage();
-        stages[2].Init(2, 0, 0, false, 2400, 1500, 1);
+        stages[2].Init(2, "1-3", 0, 0, false, 2400, 1500, 1);
         
         stages[3] = new Stage();
-        stages[3].Init(3, 0, 0, false, 2600, 2000, 1);
+        stages[3].Init(3, "1-4", 0, 0, false, 2600, 2000, 1);
         
         stages[4] = new Stage();
-        stages[4].Init(4, 0, 0, false, 2800, 2500, 1);
+        stages[4].Init(4, "1-5", 0, 0, false, 2800, 2500, 1);
+
+        chapters = new Chapter[1];//3
+        for(int i =0; i < chapters.Length; i++)
+        {
+            chapters[i] = new Chapter();
+            for (int j = 0; j < 5; j++)
+            {
+                chapters[i].Link_with(stages[i * 5 + j]);
+            }
+        }
     }
     void Init_EnhanceInfo()
     {
@@ -275,6 +305,8 @@ public class GameManager : MonoBehaviour
         {
             ply_Stage++;
         }
+        if (chapters[ply_Chapter - 1].isEnough) ply_Chapter++;
+        // TotalStar[Chapter].isEnough --> ply_Chatper++;
     }
     public Stage GetStageData()
     {

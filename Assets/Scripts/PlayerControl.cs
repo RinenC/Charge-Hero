@@ -25,13 +25,13 @@ public class PlayerControl : MonoBehaviour
     public float f_Avitation_Accel_X;   // Avitaion 상태 시 가속도(x)
     public float f_Avitation_Accel_Y;   // Avitaion 상태 시 가속도(y) --> 2개나 필요할까
     float SPEED;                        // 적용되는 속도
-    Vector3 v_moveDir;                  // 상/하 이동 방향
+    public Vector3 v_moveDir;                  // 상/하 이동 방향
 
     [Header("_JUMP_")]
     //public float deltaY;                // LastJump 시 이동 속도
     public float[] jumpPower = new float[2];// 플레이어의 점프 가속도(1단, 2단)
     public int jumpCnt;                 // 연속 점프 수
-
+    
     [Header("_FIND_")]
     GameObject go_Target;               // 발견한 BOSS 를 참조하기 위한 변수
     public float m_fDetect_Dist;        // Ray 발사 거리
@@ -169,10 +169,12 @@ public class PlayerControl : MonoBehaviour
                 break;
 
             case E_State.Aviation:
-                //Debug.Log("Velocity " + rb.velocity);
-                v_moveDir = isJumpBtnDown == true ? Vector3.up : Vector3.down * 2;
-                if (transform.position.y >= max_Height) v_moveDir = Vector3.down * 2;
-                transform.position += v_moveDir * f_Avitation_Accel_Y * Time.deltaTime;
+                rb.velocity = new Vector2(1 * SPEED, 0);
+                v_moveDir = isJumpBtnDown == true ? Vector3.up : Vector3.down;// * 2;
+                if (transform.position.y >= max_Height) v_moveDir = Vector3.down;// * 2;
+                transform.position += v_moveDir * f_Avitation_Accel_Y * 2 * Time.deltaTime;
+                if (transform.position.y < y_base)
+                    transform.position = new Vector3(transform.position.x, y_base, transform.position.z);
                 break;
 
             case E_State.Stay:

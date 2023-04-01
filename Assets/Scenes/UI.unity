@@ -6032,6 +6032,7 @@ MonoBehaviour:
   en_HP: []
   en_ATK: []
   en_DEF: []
+  chapters: []
   stages: []
   ply_Chapter: 1
   ply_Stage: 1

@@ -36,22 +36,17 @@ public class GUIManager : MonoSingleton<MonoBehaviour>
     public UI_List HP_UI;
     // UI_Shield //
     public UI_List SHIELD_UI;
-    //public GameObject hpLayout;
-    //public GameObject heart;
-    //public List<GameObject> hpList = new List<GameObject>();
     
     [Header("_편의성_")]
     public UI_Distance ui_Dist;
     // UI Buff //
     public UI_List BUFF_UI;
-    
-    //public GameObject buffBar;
-    //public List<GameObject> buffTimer = new List<GameObject>();
 
     [Header("_강화_")]
     public Text txt_Gold;
     public UI_Enhance[] ui_Enhances;
-    float f_delay;
+    
+    float f_delay = 0.5f; // Number Counting Animation 시간
 
     //public Text txt_Map; // 제거 예정 //
     
@@ -61,12 +56,11 @@ public class GUIManager : MonoSingleton<MonoBehaviour>
         if (instance == null)
         {
             instance = this;
+            DontDestroyOnLoad(this.gameObject);
             InitScene();
         }
         else
             Destroy(this.gameObject);
-
-        DontDestroyOnLoad(this.gameObject);
     }
     void InitScene()
     {
@@ -212,15 +206,6 @@ public class GUIManager : MonoSingleton<MonoBehaviour>
         }
         Time.timeScale = 1f;
     }
-
-    //public void UIUpdate()
-    //{
-    //    if (GameManager.instance.go_Player)
-    //    {
-    //        //HPBar();
-    //        //RescueUI();
-    //    }
-    //}
     public IEnumerator NumberAnimation(float target, float current, E_VALUE type)
     {
         float duration = f_delay; // 카운팅에 걸리는 시간 설정. 

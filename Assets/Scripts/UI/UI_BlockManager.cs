@@ -19,7 +19,7 @@ public class UI_BlockManager : MonoBehaviour
     {
         Deactivate_ALL();
         for (int i = 0; i < list_ChildUI.Length; i++)
-        {
+        { // num = 1
             if (i >= num) return;
             list_ChildUI[i].Event_Able();
         }

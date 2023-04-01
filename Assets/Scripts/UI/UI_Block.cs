@@ -38,10 +38,17 @@ public class UI_Block : MonoBehaviour
     }
     public void SetData(int idx)
     {
-        stage = GameManager.instance.stages[idx];
-        if (txt_Stage) txt_Stage.text = stage.name;
-        ui_Stars.ShowStar(stage.getStar);
-        SetPercentText();
+        try
+        {
+            stage = GameManager.instance.stages[idx];
+            if (txt_Stage) txt_Stage.text = stage.name;
+            ui_Stars.ShowStar(stage.getStar);
+            SetPercentText();
+        }
+        catch
+        {
+            Debug.Log("아직 구현되지 않은 지역 입니다.");
+        }
     }
     void SetPercentText()
     {

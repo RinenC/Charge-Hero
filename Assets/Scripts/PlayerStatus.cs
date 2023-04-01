@@ -13,11 +13,6 @@ public class PlayerStatus : MonoBehaviour
     PlayerControl control;
     PlayerEffect effect;
 
-    //[Header("아이템 이펙트")]
-    //float gravity = 0;
-    //public GameObject invincibleSprite;
-    //public GameObject aviationSprite;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -25,11 +20,6 @@ public class PlayerStatus : MonoBehaviour
         effect = GetComponent<PlayerEffect>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
     public void InitStatus(Status status)
     {
         this.status = status;
@@ -54,38 +44,4 @@ public class PlayerStatus : MonoBehaviour
             else effect.Activate_Effect(PlayerEffect.E_effect.AttackedInvin);
         }
     }
-    //public void Upgrade(PlusStatus plusStat)
-    //{
-    //    HP += plusStat.hp;
-    //    ATK += plusStat.atk;
-    //    DEF += plusStat.def_cnt;
-    //}
-
-    //public void InvincibleItemEffect()
-    //{
-    //    if (!GameManager.instance.aviation)
-    //    {
-    //        if (!GameManager.instance.invincible)
-    //            invincibleSprite.SetActive(false);
-    //        else
-    //            invincibleSprite.SetActive(true);
-    //    }
-    //}
-
-    //public void AviationItemEffect()
-    //{
-    //    if (GameManager.instance.aviation)
-    //    {
-    //        if (GameManager.instance.aviationTimer > 0)
-    //        {
-    //            GetComponent<Rigidbody2D>().gravityScale = 0;
-    //            aviationSprite.SetActive(true);
-    //        }
-    //    }
-    //    if (!GameManager.instance.aviation)
-    //    {
-    //        GetComponent<Rigidbody2D>().gravityScale = gravity;
-    //        aviationSprite.SetActive(false);
-    //    }
-    //}
 }
