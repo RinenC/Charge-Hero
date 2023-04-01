@@ -29,7 +29,7 @@ public struct Enhance
 public class Chapter
 {
     int stars;
-    int need_Cnt = 2;
+    int need_Cnt = 10;
     public int total
     {
         get { for (int i = 0; i < stages.Count; i++) stars += stages[i].getStar; return stars; }
@@ -40,7 +40,7 @@ public class Chapter
     {
         if(stages == null) stages = new List<Stage>();
         stages.Add(stage);
-        Debug.Log("Link_with . . ." + stage.name);
+        //Debug.Log("Link_with . . ." + stage.name);
     }
 }
 

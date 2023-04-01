@@ -20,7 +20,6 @@ public class Item : MonoBehaviour
     public float speed;
 
     public GameObject buffTimer;
-    public BuffTimer scriptBT;
     //public float duration;
     //public float timer;
 
@@ -82,21 +81,21 @@ public class Item : MonoBehaviour
         Destroy(this.gameObject);
     }
 
-    void CreateTimer(ItemType itemType)
-    {
-        scriptBT = buffTimer.GetComponent<BuffTimer>();
-        scriptBT.buffTime = value;
-        switch (itemType)
-        {
-            case ItemType.Invincible:
-                scriptBT.type = "invincible";
-                break;
-            case ItemType.Aviation:
-                scriptBT.type = "aviation";
-                break;
-        }
-        //var prefabBuffTimer = Instantiate(buffTimer, GUIManager.instance.buffBar.transform);
-    }
+    //void CreateTimer(ItemType itemType)
+    //{
+    //    scriptBT = buffTimer.GetComponent<BuffTimer>();
+    //    scriptBT.buffTime = value;
+    //    switch (itemType)
+    //    {
+    //        case ItemType.Invincible:
+    //            scriptBT.type = "invincible";
+    //            break;
+    //        case ItemType.Aviation:
+    //            scriptBT.type = "aviation";
+    //            break;
+    //    }
+    //    var prefabBuffTimer = Instantiate(buffTimer, GUIManager.instance.buffBar.transform);
+    //}
     //public void SetType(ItemType itemtype)
     //{
     //    switch (itemtype)

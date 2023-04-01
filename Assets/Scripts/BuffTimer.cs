@@ -5,22 +5,15 @@ using UnityEngine.UI;
 
 public class BuffTimer : MonoBehaviour
 {
-    public float buffTime;
     public float buffTimer;
     public string type;
     public GameObject itemSprite;
     public Text timer;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        //SetSprite(type);
-        //buffTimer = buffTime;
-    }
     public void Init(string type, int value)
     {
         SetSprite(type);
-        buffTimer = buffTime;
+        buffTimer = value;
     }
     // Update is called once per frame
     void Update()
@@ -34,7 +27,7 @@ public class BuffTimer : MonoBehaviour
 
         if(buffTimer <= 0)
         {
-            buffTimer = buffTime;
+            //buffTimer = buffTime;
             Destroy(this.gameObject);
         }
 
