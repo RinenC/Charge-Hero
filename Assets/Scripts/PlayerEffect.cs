@@ -15,7 +15,7 @@ public class PlayerEffect : MonoBehaviour
     public float f_Magnetic_Rad;            // 자석 범위
     public float f_Invic_time;              // 피격 무적 시간
     public Color[] colors;                  // 피격 효과 색상
-
+    public bool INVICIBILLITY { get { return (b_Effected[0] || b_Effected[1]); } }
     // Start is called before the first frame update
     void Start()
     {
@@ -74,7 +74,7 @@ public class PlayerEffect : MonoBehaviour
     }
     IEnumerator SetAttacked()
     {
-        Debug.Log("Invincibility_Start");
+        //Debug.Log("Invincibility_Start");
         this.gameObject.layer = 9;
         float sec = f_Invic_time / 10;
         for (int i = 0; i < 10; i++)
@@ -83,7 +83,7 @@ public class PlayerEffect : MonoBehaviour
             yield return new WaitForSeconds(sec);
         }
         this.gameObject.layer = 0;
-        Debug.Log("Invincibility_End");
+        //Debug.Log("Invincibility_End");
     }
     void Avitation()
     {

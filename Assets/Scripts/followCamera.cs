@@ -25,16 +25,19 @@ public class followCamera : MonoBehaviour
     // Start is called before the first frame update
     private void Awake()
     {
-        Debug.Log("follow Camera Awake");
+        //Debug.Log("follow Camera Awake");
         GameManager.instance.followCam = this;
         //go_Player = GameManager.instance.go_Player;
     }
     void Start()
     {
-        Debug.Log("follow Camera Start");
+        //Debug.Log("follow Camera Start");
         cam = GetComponent<Camera>();
     }
-
+    private void OnEnable()
+    {
+        //Debug.Log("follow Camera OnEnable");
+    }
     // Update is called once per frame
     void Update()
     {

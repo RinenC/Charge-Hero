@@ -7,12 +7,16 @@ public class UI_Block : MonoBehaviour
 {
     // Stage //
     // º° °¹¼ö //
+    // enum { Chapter, Stage }
     // ÁøÇà·ü //
     public GameObject go_Block;
     Button my_Btn;
     public UI_Star ui_Stars;
     public Stage stage;
     public Text txt_Percent;
+    public Text txt_Stage;
+
+    public Color[] colors;
     // public Text txt_Percent;
     // public G
     // Start is called before the first frame update
@@ -35,7 +39,20 @@ public class UI_Block : MonoBehaviour
     public void SetData(int idx)
     {
         stage = GameManager.instance.stages[idx];
+        if (txt_Stage) txt_Stage.text = stage.name;
         ui_Stars.ShowStar(stage.getStar);
-        txt_Percent.text = string.Format("{0:#0}%", stage.percent * 100);
+        SetPercentText();
+    }
+    void SetPercentText()
+    {
+        float percent = stage.percent;
+        Color color;
+        if (percent < 0.5) color = colors[0];
+        else if (percent < 0.8) color = colors[1];
+        else if (percent < 0.9) color = colors[2];
+        else if (percent < 1.0) color = colors[3];
+        else color = colors[4];
+        txt_Percent.color = color;
+        txt_Percent.text = string.Format("{0:#0} %", percent * 100);
     }
 }

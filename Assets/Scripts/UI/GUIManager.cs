@@ -33,24 +33,27 @@ public class GUIManager : MonoSingleton<MonoBehaviour>
     [Header("_플레이어_")]
     public Text txt_Atk;
     // UI_HP //
-    public GameObject hpLayout;
-    public GameObject heart;
-    public List<GameObject> hpList = new List<GameObject>();
+    public UI_List HP_UI;
     // UI_Shield //
-    // 추가
+    public UI_List SHIELD_UI;
+    //public GameObject hpLayout;
+    //public GameObject heart;
+    //public List<GameObject> hpList = new List<GameObject>();
     
     [Header("_편의성_")]
     public UI_Distance ui_Dist;
     // UI Buff //
-    public float f_delay;
-    public GameObject buffBar;
-    public List<GameObject> buffTimer = new List<GameObject>();
+    public UI_List BUFF_UI;
+    
+    //public GameObject buffBar;
+    //public List<GameObject> buffTimer = new List<GameObject>();
 
     [Header("_강화_")]
     public Text txt_Gold;
     public UI_Enhance[] ui_Enhances;
+    float f_delay;
 
-    public Text txt_Map; // 제거 예정 //
+    //public Text txt_Map; // 제거 예정 //
     
     #region Main
     private void Awake()
@@ -83,7 +86,7 @@ public class GUIManager : MonoSingleton<MonoBehaviour>
     void Update()
     {
         //SceneUpdate();
-        UIUpdate();
+        //UIUpdate();
     }
     void ShowScene()
     {
@@ -117,17 +120,16 @@ public class GUIManager : MonoSingleton<MonoBehaviour>
                 for (int i = 0; i < 3; i++) ui_Enhances[i].Init();
                 break;
             case E_Scene.PLAY:
-                //SceneManager.LoadScene(GameManager.instance.map);
-                // GUIManager.instance.SetUI();
                 // Map 제목 제거 //
-                txt_Map.text = GameManager.instance.map;
-                txt_Atk.text = string.Format("{0:#,###}", GameManager.instance.status.atk);
+                //txt_Map.text = GameManager.instance.map;
+                
                 // HP UI 초기화 //
-
+                HP_UI.Init(GameManager.instance.status.hp);
                 // Shield UI 초기화 //
+                SHIELD_UI.Init(GameManager.instance.status.def_cnt);
 
                 // ATK UI 초기화 //
-
+                txt_Atk.text = string.Format("{0:#,###}", GameManager.instance.status.atk);
                 break;
         }
         ShowScene();
@@ -140,7 +142,6 @@ public class GUIManager : MonoSingleton<MonoBehaviour>
     {
         SceneManager.LoadScene(GameManager.instance.map);
         Event_Next();
-        //DontDestroyOnLoad(GameManager.instance.gameObject);
     }
     public void Event_Back()
     {
@@ -212,14 +213,14 @@ public class GUIManager : MonoSingleton<MonoBehaviour>
         Time.timeScale = 1f;
     }
 
-    public void UIUpdate()
-    {
-        if (GameManager.instance.go_Player)
-        {
-            HPBar();
-            //RescueUI();
-        }
-    }
+    //public void UIUpdate()
+    //{
+    //    if (GameManager.instance.go_Player)
+    //    {
+    //        //HPBar();
+    //        //RescueUI();
+    //    }
+    //}
     public IEnumerator NumberAnimation(float target, float current, E_VALUE type)
     {
         float duration = f_delay; // 카운팅에 걸리는 시간 설정. 
@@ -251,27 +252,27 @@ public class GUIManager : MonoSingleton<MonoBehaviour>
                 break;
         }
     }
-    public void HPBar()
-    {
-        if (GameManager.instance.go_Player.GetComponent<PlayerStatus>().HP < hpList.Count) //데미지 받았을 때
-        {
-            for (int i = 0; i < hpList.Count - GameManager.instance.go_Player.GetComponent<PlayerStatus>().HP; i++)
-            {
-                var prefab = hpList[i];
-                hpList.Remove(hpList[i]);
-                Destroy(prefab);
-            }
-        }
+    //public void HPBar()
+    //{
+    //    if (GameManager.instance.go_Player.GetComponent<PlayerStatus>().HP < hpList.Count) //데미지 받았을 때
+    //    {
+    //        for (int i = 0; i < hpList.Count - GameManager.instance.go_Player.GetComponent<PlayerStatus>().HP; i++)
+    //        {
+    //            var prefab = hpList[i];
+    //            hpList.Remove(hpList[i]);
+    //            Destroy(prefab);
+    //        }
+    //    }
 
-        else if (GameManager.instance.go_Player.GetComponent<PlayerStatus>().HP > hpList.Count) //체력 회복했을 때
-        {
-            for (int i = 0; i < GameManager.instance.go_Player.GetComponent<PlayerStatus>().HP - hpList.Count; i++)
-            {
-                var prefabHP = Instantiate(heart, hpLayout.transform);
-                hpList.Add(prefabHP);
-            }
-        }
-    }
+    //    else if (GameManager.instance.go_Player.GetComponent<PlayerStatus>().HP > hpList.Count) //체력 회복했을 때
+    //    {
+    //        for (int i = 0; i < GameManager.instance.go_Player.GetComponent<PlayerStatus>().HP - hpList.Count; i++)
+    //        {
+    //            var prefabHP = Instantiate(heart, hpLayout.transform);
+    //            hpList.Add(prefabHP);
+    //        }
+    //    }
+    //}
     #endregion
 
     #region Item

@@ -223,7 +223,7 @@ public class GameManager : MonoBehaviour
                 break;
             default:
                 SetPlayer();// 굳이 동적 할당 해야할까? //
-                GUIManager.instance.SetUI();
+                StageManager.instance.Set();
                 break;
         }
     }
@@ -282,8 +282,7 @@ public class GameManager : MonoBehaviour
         string[] data = map.Split('-');
         int chap = int.Parse(data[0]);
         int stage = int.Parse(data[1]);
-        int idx = (chap - 1) * 5 - (stage - 1);
-        return stages[idx];
+        return stages[GetIndex(chap, stage)];
     }
 
     //public void Invincible()

@@ -44,16 +44,22 @@ public class UI_Enhance : MonoBehaviour
             switch (type)
             {
                 case E_Status.HP:
-                    GameManager.instance.status.Lv_HP++;
-                    GameManager.instance.status.hp += enhance.stat;
+                    if (GameManager.instance.status.hp < 10)
+                    {
+                        GameManager.instance.status.Lv_HP++;
+                        GameManager.instance.status.hp += enhance.stat;
+                    }
                     break;
                 case E_Status.ATK:
                     GameManager.instance.status.Lv_ATK++;
                     GameManager.instance.status.atk += enhance.stat;
                     break;
                 case E_Status.DEF:
-                    GameManager.instance.status.Lv_DEF++;
-                    GameManager.instance.status.def_cnt += enhance.stat;
+                    if (GameManager.instance.status.def_cnt < 5)
+                    {
+                        GameManager.instance.status.Lv_DEF++;
+                        GameManager.instance.status.def_cnt += enhance.stat;
+                    }
                     break;
             }
         }

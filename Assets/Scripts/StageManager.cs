@@ -10,8 +10,7 @@ public class StageManager : MonoBehaviour
     public GameObject go_Boss;
     public Stage stage;
     UI_Distance ui_Dist;
-    // stage 를 클래스로 변경해서 
-    // stage 의 bossHP 를 BossMonster 에 할당해도 되는가?
+
     // 구출한 동료 수
     public int rescue;
 
@@ -30,15 +29,16 @@ public class StageManager : MonoBehaviour
         {
             instance = this;
             ui_Dist = GUIManager.instance.ui_Dist;
-            //quests = new Quest[3];
-            stage = GameManager.instance.GetStageData();
+            DontDestroyOnLoad(gameObject);
         }
+        else
+            Destroy(this.gameObject);
     }
-    // Start is called before the first frame update
-    void Start()
+    public void Set()
     {
-        // Boss 체력 설정
+        stage = GameManager.instance.GetStageData();
         go_Boss.GetComponent<BossMonster>().HP = stage.bossHP;
+        GUIManager.instance.SetUI();
 
         quests = new Quest[3];
 
@@ -47,10 +47,11 @@ public class StageManager : MonoBehaviour
         quests[1] = QuestManager.instance.GetQuest(1);
         quests[2] = QuestManager.instance.GetQuest(4);
     }
-    // DB 로 부터 Quest 종류 읽어오기.
-    // Update is called once per frame
-    void Update()
+    // Start is called before the first frame update
+    void Start()
     {
+        Debug.Log("StageManager_Start");
+        // Boss 체력 설정
         
     }
     public void CheckQuest()
@@ -65,7 +66,7 @@ public class StageManager : MonoBehaviour
                     break;
 
                 case E_Quest.HP: // Boss Kill 조건
-                    float rat = go_Player.GetComponent<PlayerStatus>().HP / GameManager.instance.status.hp;
+                    float rat = (float)go_Player.GetComponent<PlayerStatus>().HP / (float)GameManager.instance.status.hp;
                     if (rat >= quests[i].value) clear_Cnt++;
                     break;
 
@@ -99,6 +100,7 @@ public class StageManager : MonoBehaviour
         }
 
         int reward_Gold = stage.repeat ? (int)(stage.repeat_Gold * ui_Dist.percent) : stage.first_Gold;
+        GameManager.instance.n_Gold += reward_Gold;
         stage.Update_Info(clear_Cnt, ui_Dist.percent, kill);
         GUIManager.instance.Event_ShowResult(stage.getStar,reward_Gold, kill);
     }

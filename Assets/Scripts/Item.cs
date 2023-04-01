@@ -46,7 +46,11 @@ public class Item : MonoBehaviour
         switch (curType)
         {
             case ItemType.Heal: // 힐
-                go_Collider.GetComponent<PlayerStatus>().HP += value;
+                if (go_Collider.GetComponent<PlayerStatus>().HP < 10)
+                {
+                    go_Collider.GetComponent<PlayerStatus>().HP += value;
+                    GUIManager.instance.HP_UI.Add();
+                }
                 break;
 
             case ItemType.Damage:// 파워업
@@ -57,12 +61,14 @@ public class Item : MonoBehaviour
 
             case ItemType.Invincible:// 무적
                 go_Collider.GetComponent<PlayerEffect>().Activate_Effect(PlayerEffect.E_effect.ItemInvin, value);
-                CreateTimer(curType);
+                //CreateTimer(curType);
+                GUIManager.instance.BUFF_UI.Add("Invincible", value);
                 break;
 
             case ItemType.Aviation:// 비행 + 무적 + 자석(골드만?)
                 go_Collider.GetComponent<PlayerEffect>().Activate_Effect(PlayerEffect.E_effect.Avitaton, value);
-                CreateTimer(curType);
+                //CreateTimer(curType);
+                GUIManager.instance.BUFF_UI.Add("Aviation", value);
                 break;
 
             case ItemType.ChangeCoin:
@@ -89,7 +95,7 @@ public class Item : MonoBehaviour
                 scriptBT.type = "aviation";
                 break;
         }
-        var prefabBuffTimer = Instantiate(buffTimer, GUIManager.instance.buffBar.transform);
+        //var prefabBuffTimer = Instantiate(buffTimer, GUIManager.instance.buffBar.transform);
     }
     //public void SetType(ItemType itemtype)
     //{

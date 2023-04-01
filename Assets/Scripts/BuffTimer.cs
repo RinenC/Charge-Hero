@@ -14,10 +14,14 @@ public class BuffTimer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //SetSprite(type);
+        //buffTimer = buffTime;
+    }
+    public void Init(string type, int value)
+    {
         SetSprite(type);
         buffTimer = buffTime;
     }
-
     // Update is called once per frame
     void Update()
     {
@@ -44,10 +48,10 @@ public class BuffTimer : MonoBehaviour
     {
         switch(type)
         {
-            case "invincible":
+            case "Invincible":
                 itemSprite.GetComponent<Image>().sprite = DBLoader.Instance.invincibleitem;
                 break;
-            case "aviation":
+            case "Aviation":
                 itemSprite.GetComponent<Image>().sprite = DBLoader.Instance.aviationitem;
                 break;
         }

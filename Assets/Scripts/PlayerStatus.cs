@@ -36,16 +36,22 @@ public class PlayerStatus : MonoBehaviour
     }
     public void Damaged(float dmg)
     {
-        //Debug.Log("Damaged");
-        //if defencse _ cnt > 0
-        StageManager.instance.attacked_Cnt++;
-        if (DEF > 0) DEF -= (int)dmg;
-        else HP -= (int)dmg;
-        if (HP <= 0) control.ChangeState(PlayerControl.E_State.DIE);
-        else
+        if (!effect.INVICIBILLITY)
         {
-            GUIManager.instance.HPBar();
-            effect.Activate_Effect(PlayerEffect.E_effect.AttackedInvin);
+            StageManager.instance.attacked_Cnt++;
+            if (DEF > 0)
+            {
+                DEF -= (int)dmg;
+                GUIManager.instance.SHIELD_UI.Remove();
+            }
+            else
+            {
+                HP -= (int)dmg;
+                GUIManager.instance.HP_UI.Remove();
+            }
+
+            if (HP <= 0) control.ChangeState(PlayerControl.E_State.DIE);
+            else effect.Activate_Effect(PlayerEffect.E_effect.AttackedInvin);
         }
     }
     //public void Upgrade(PlusStatus plusStat)
