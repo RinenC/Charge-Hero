@@ -36,7 +36,8 @@ public class Companion : MonoBehaviour
     public void GetCompanion()
     {
         float dist = Vector3.Distance(player.transform.position, transform.position);
-        if(dist < 1.5f)
+        Debug.Log(dist);
+        if(dist < 2.2f)
         {
             int atk = player.GetComponent<PlayerStatus>().ATK;
             StartCoroutine(GUIManager.instance.NumberAnimation(atk + 5, atk, E_VALUE.ATK));
