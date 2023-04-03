@@ -7,10 +7,11 @@ using UnityEngine;
 public class followCamera : MonoBehaviour
 {
     public GameObject go_Player;
-    public Vector3 v_offset;
+    //public Vector3 v_offset;
     public UI_SkillScene skill_Scene;
     public float m_fZoom;
     public float m_fZoomOut;
+    float zoomFit;
     Camera cam;
     public float deltahieght = 2;
     public Vector3 v_Goal;
@@ -33,6 +34,7 @@ public class followCamera : MonoBehaviour
     {
         //Debug.Log("follow Camera Start");
         cam = GetComponent<Camera>();
+        zoomFit = cam.orthographicSize;
     }
     private void OnEnable()
     {
@@ -48,29 +50,14 @@ public class followCamera : MonoBehaviour
         switch (type)
         {
             case E_type.normal:
-                v_pos = go_Player.transform.position + v_offset;
-                v_pos.y = 0;
+                v_pos = new Vector3(go_Player.transform.position.x + 8, 2, transform.position.z);//
                 transform.position = v_pos;
                 break;
             case E_type.closeup:
-                // 현재 위치에서 캐릭터의 x,y 위치 까지 이동 및 z -2 까지 이동.
-                //if ((transform.position - v_Goal).magnitude >= 0.3f)
-                //{
-                //    Debug.Log("Dist:" + (transform.position - v_Goal).magnitude);
-                //    transform.position += v_moveDir * m_fSpeed * 1.3f * Time.deltaTime;
-                //    cam.orthographicSize -= m_fZoom * 1.2f * Time.deltaTime;
-
-                //}
-                //else if ((transform.position - v_Goal).magnitude < 0.3f
-                //    && go_Player.transform.position.y >= go_Player.GetComponent<PlayerControl>().max_Height)
-                //{
-                //    skill_Scene.OnEventSkillScene();
-                //    ChangeCamType(E_type.delay);
-                //}
                 cam.orthographicSize -= m_fZoom * 1.2f * Time.deltaTime;
-                if(cam.orthographicSize <= 4.0f)
+                if(cam.orthographicSize <= 5.0f)
                 {
-                    cam.orthographicSize = 4.0f;
+                    cam.orthographicSize = 5.0f;
                     //skill_Scene.OnEventSkillScene();
                     GUIManager.instance.Event_ShowSkill();
                     ChangeCamType(E_type.delay);
@@ -80,22 +67,14 @@ public class followCamera : MonoBehaviour
 
                 break;
             case E_type.closedown:
-                if ((transform.position - v_Origin).magnitude >= 0.2f)
+                cam.orthographicSize += m_fZoom * 1.2f * Time.deltaTime;
+                if (cam.orthographicSize >= zoomFit)
                 {
-                    //Debug.Log("(transform.position - v_Goal).magnitude> " + (transform.position - v_Origin).magnitude);
-                    //Debug.Log("Sqrt(29):" + Mathf.Sqrt(29) + ", Dist:" + (transform.position - go_Player.transform.position).magnitude);
-                    //transform.position += v_moveDir * m_fSpeed / m_fZoomOut * Time.deltaTime;
-                    cam.orthographicSize += m_fZoom * 1.2f *Time.deltaTime;
-                    if (cam.orthographicSize >= 5.0f)
-                    {
-                        cam.orthographicSize = 5.0f;
-                    }
-                    //Debug.Log("orthographicSize" + cam.orthographicSize);
-                    //Debug.Log("sensorSize" + cam.sensorSize);
+                    cam.orthographicSize = zoomFit;
                 }
                 else
                 {
-                    transform.position = v_Origin;
+                    //transform.position = v_Origin;
 
                     //ChangeCamType(E_type.final); // 플레이어가 바닥에 닿으면 
                     //ChangeCamType(E_type.final);
@@ -106,7 +85,11 @@ public class followCamera : MonoBehaviour
             case E_type.set:
                 // if() 거리 == "값" --> ChangeType(normal)
                 transform.position += Vector3.right * m_fSpeed * Time.deltaTime;
-                if (transform.position.x - go_Player.transform.position.x >= 9) ChangeCamType(E_type.normal);
+                if (transform.position.x - go_Player.transform.position.x >= 9)
+                {
+                    ChangeCamType(E_type.normal);
+                    StartCoroutine(go_Player.GetComponent<PlayerControl>().ReRun());
+                }
                 break;
             case E_type.final:
                 if (Mathf.Abs(transform.position.x - go_Player.transform.position.x) >= fDist)
@@ -137,10 +120,9 @@ public class followCamera : MonoBehaviour
                 //v_moveDir.Normalize();
                 break;
             case E_type.closedown:
-                //go_Player.GetComponent<Control>().ChangeCharacterState(Control.E_STATE.Attack);
                 go_Player.GetComponent<PlayerControl>().ChangeState(PlayerControl.E_State.Attack);
-                v_moveDir = v_Origin - transform.position;// - v_Origin;
-                v_moveDir.Normalize();
+                //v_moveDir = v_Origin - transform.position;// - v_Origin;
+                //v_moveDir.Normalize();
                 break;
             case E_type.delay:
 
@@ -151,16 +133,6 @@ public class followCamera : MonoBehaviour
                 v_moveDir.z = 0;
                 v_moveDir.Normalize();
                 break;
-        }
-    }
-
-
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.layer == 7)
-        {
-            collision.gameObject.transform.position += new Vector3(46f, 0, 0);
         }
     }
 }

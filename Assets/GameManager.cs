@@ -281,21 +281,8 @@ public class GameManager : MonoBehaviour
         // 업그레이드 된 능력치 Prefab에 적용
         go_Player.GetComponent<PlayerStatus>().InitStatus(status);
     }
-    public void StageClear() // GameFinish GameEnd
+    public void GameEnd()
     {
-        //GUIManager.instance.Event_ShowResult();
-        StageManager.instance.CheckQuest();
-        OpenStage();
-    }
-    public void GameOver()
-    {
-        //Time.timeScale = 0; // --> 시작하면 다시 1로 변경 --> 이렇게 하니까 창도 안뜸.
-        // 다시하기 버튼이 필요한데 그냥 게임오버용 결과창을 새로만드는게..
-        //GUIManager.instance.Event_ShowResult(false);
-
-        //StageManager.stage.CheckQuest();
-        // 반환을 int 형으로 받는다.
-        // stage 값을 통해 해당 stage 의 별 갯수를 추가 or 변경 한다.
         StageManager.instance.CheckQuest();
         OpenStage();
     }

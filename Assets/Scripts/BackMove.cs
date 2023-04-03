@@ -4,15 +4,12 @@ using UnityEngine;
 
 public class BackMove : MonoBehaviour
 {
-    [SerializeField] LayerMask layer;
-
-    private void OnTriggerExit2D(Collider2D collision)
+    public float speed = 0.5f;
+    float offset;
+    public Renderer rend;
+    private void Update()
     {
-        if(collision.gameObject.layer ==layer)
-        {
-            Vector3 pos = transform.position;
-            pos.x += 46;
-            transform.position = pos;
-        }
+        offset += Time.deltaTime * speed;
+        rend.material.mainTextureOffset += Vector2.right * Time.deltaTime * speed;
     }
 }

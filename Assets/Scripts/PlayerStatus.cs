@@ -40,7 +40,7 @@ public class PlayerStatus : MonoBehaviour
                 GUIManager.instance.HP_UI.Remove();
             }
 
-            if (HP <= 0) control.ChangeState(PlayerControl.E_State.DIE);
+            if (HP <= 0) control.ChangeState(PlayerControl.E_State.End);
             else effect.Activate_Effect(PlayerEffect.E_effect.AttackedInvin);
         }
     }

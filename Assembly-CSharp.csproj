@@ -70,6 +70,7 @@
     <Compile Include="Assets\Scripts\UI\SlideButton.cs" />
     <Compile Include="Assets\Scripts\UI\UI_Star.cs" />
     <Compile Include="Assets\Scripts\Companion.cs" />
+    <Compile Include="Assets\Scripts\SoundManager.cs" />
     <Compile Include="Assets\Scripts\SavePoint.cs" />
     <Compile Include="Assets\Scripts\followCamera.cs" />
     <Compile Include="Assets\Scripts\UI\UI_Status.cs" />
@@ -79,6 +80,7 @@
     <Compile Include="Assets\Scripts\UI\GUIManager.cs" />
     <Compile Include="Assets\Scripts\PlayerControl.cs" />
     <Compile Include="Assets\Scripts\testFile.cs" />
+    <Compile Include="Assets\Scripts\BackMove.cs" />
     <Compile Include="Assets\Scripts\UI\UI_BlockManager.cs" />
     <Compile Include="Assets\Scripts\BossMonster.cs" />
     <Compile Include="Assets\Scripts\PlayerEffect.cs" />
@@ -89,8 +91,6 @@
     <Compile Include="Assets\Scripts\BuffTimer.cs" />
     <Compile Include="Assets\Scripts\PlayerStatus.cs" />
     <Compile Include="Assets\Scripts\UI\UI_Enhance.cs" />
-    <Compile Include="Assets\Scripts\BackMove.cs" />
-    <Compile Include="Assets\Scripts\SoundManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

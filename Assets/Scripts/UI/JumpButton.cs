@@ -15,7 +15,7 @@ public class JumpButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     public void OnClickEvent()
     {
-        GameManager.instance.go_Player.GetComponent<PlayerControl>().Jump_Input();
+        GameManager.instance.go_Player.GetComponent<PlayerControl>().DoJump();
     }
 
     public void OnPointerDown(PointerEventData eventData)
