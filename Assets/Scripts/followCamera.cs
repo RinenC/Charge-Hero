@@ -153,4 +153,14 @@ public class followCamera : MonoBehaviour
                 break;
         }
     }
+
+
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.layer == 7)
+        {
+            collision.gameObject.transform.position += new Vector3(46f, 0, 0);
+        }
+    }
 }
