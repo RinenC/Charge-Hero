@@ -31,7 +31,7 @@ public class Item : MonoBehaviour
 
     private void Update()
     {
-        if(moved) Move_To_Player();
+        if (moved) Move_To_Player();
     }
     void Move_To_Player()
     {
@@ -71,6 +71,7 @@ public class Item : MonoBehaviour
                 break;
 
             case ItemType.ChangeCoin:
+                GameManager.instance.changeCoin = true;
                 break;
 
             case ItemType.Gold: // °ñµå
@@ -80,7 +81,6 @@ public class Item : MonoBehaviour
 
         Destroy(this.gameObject);
     }
-
     //void CreateTimer(ItemType itemType)
     //{
     //    scriptBT = buffTimer.GetComponent<BuffTimer>();

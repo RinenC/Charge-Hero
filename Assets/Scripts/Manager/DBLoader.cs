@@ -30,6 +30,7 @@ public class DBLoader : MonoSingleton<DBLoader>
         damageitem = Resources.Load<Sprite>("Image/Damage Item");
         invincibleitem = Resources.Load<Sprite>("Image/Invincible");
         aviationitem = Resources.Load<Sprite>("Image/flight");
+        changeCoinitem = Resources.Load<Sprite>("Image/ChangeCoin");
         protruding = Resources.Load<Sprite>("Image/Frog");
         patrol = Resources.Load<Sprite>("Image/Dino");
     }

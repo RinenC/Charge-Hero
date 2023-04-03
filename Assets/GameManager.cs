@@ -97,6 +97,7 @@ public class GameManager : MonoBehaviour
     [Header("플레이어 기본 능력치")]
     public Status status;
     public int n_Gold;
+    public bool changeCoin;
 
     public Enhance[] en_HP;
     public Enhance[] en_ATK;
