@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerControl : MonoBehaviour
 {
-    public enum E_State { Run, JumpUP, JumpDown, Aviation, LastJump, Stay, Attack, End, Attacked};
+    public enum E_State { Run, JumpUP, JumpDown, Aviation, RunUp, LastJump, Stay, Attack, End, Attacked};
 
     [Header("_Button_")]
     JumpButton jumpBtn;
@@ -36,12 +36,12 @@ public class PlayerControl : MonoBehaviour
     
     [Header("_FIND_")]
     GameObject go_Target;               // 발견한 BOSS 를 참조하기 위한 변수
-    float m_fDetect_Dist = 13;        // Ray 발사 거리
+    float m_fDetect_Dist = 20;        // Ray 발사 거리
     //public float m_fDetect_Height;      // Ray 발사 높이
     bool b_Find;                        // BOSS 발견 여부
 
     [Header("_ATTACK")]
-    float f_RunUp_Dist = 3;          // 도움닫기 길이
+    float f_RunUp_Dist = 5;          // 도움닫기 길이
     float dist;                         // 도움닫기 거리
     Vector3 landPosition;               // BOSS 공격 후 도착할 지점
     float f_Attacked_Power= 20;      // 공격 실패 시 튕겨나가는 힘
@@ -80,6 +80,8 @@ public class PlayerControl : MonoBehaviour
         colliders[0].enabled = true;
         colliders[1].enabled = false;
         //cam 을 GM 으로 부터 할당받기.
+        go_Target = StageManager.instance.go_Boss;
+        landPosition = go_Target.GetComponent<BossMonster>().goal.transform.position;
     }
 
     // Update is called once per frame
@@ -89,25 +91,6 @@ public class PlayerControl : MonoBehaviour
         UpdateState();
         DetectBoss();
     }
-    
-    public void Jump_Input()
-    {
-        switch (state)
-        {
-            case E_State.Run:
-                DoJump();
-                break;
-            case E_State.Aviation:
-                
-                break;
-            case E_State.LastJump:
-
-                break;
-            default:
-                
-                break;
-        }
-    }
     public void InputControl()
     {
         //if(state != E_State.Aviation)
@@ -116,6 +99,9 @@ public class PlayerControl : MonoBehaviour
         //Debug.Log("Slide Key" + Input.GetKey(KeyCode.D));
         if(Input.GetKeyDown(KeyCode.D)) isSlideBtnDown = true;
         else if(Input.GetKeyUp(KeyCode.D)) isSlideBtnDown = false;
+
+        if (Input.GetKeyDown(KeyCode.Space)) isJumpBtnDown = true;
+        else if (Input.GetKeyUp(KeyCode.Space)) isJumpBtnDown = false;
     }
     void UpdateState()
     {
@@ -126,19 +112,26 @@ public class PlayerControl : MonoBehaviour
             case E_State.Run:
                 DoSlide();
                 break;
+
             case E_State.JumpUP:
                 if (rb.velocity.y <= 0) ChangeState(E_State.JumpDown);
                 break;
+
             case E_State.JumpDown:
                 //if (transform.position.y <= y_base) ChangeState(E_State.Run);
                 break;
-            case E_State.LastJump:// x 방향으로 3만큼 이동 후 점프.
+
+            case E_State.RunUp:
                 dist += Vector3.right.x * SPEED * Time.deltaTime;
                 if (dist >= f_RunUp_Dist)
                 {
-                    transform.position += v_moveDir * jumpPower[0] * Time.deltaTime;
-                    if (transform.position.y >= max_Height) ChangeState(E_State.Stay);
+                    ChangeState(E_State.LastJump);
                 }
+                break;
+
+            case E_State.LastJump:// x 방향으로 3만큼 이동 후 점프.
+                transform.position += v_moveDir * jumpPower[0] * Time.deltaTime;
+                if (transform.position.y >= max_Height) ChangeState(E_State.Stay);
                 break;
 
             case E_State.Aviation:
@@ -177,20 +170,23 @@ public class PlayerControl : MonoBehaviour
                 SPEED = f_Speed;
                 rb.gravityScale = GRAVITY;
                 break;
+
             case E_State.JumpUP:
                 rb.gravityScale = GRAVITY;
                 break;
+
             case E_State.JumpDown:
                 anim.SetBool("isLand", true);
                 rb.gravityScale = DownGraviry;
                 break;
+
             case E_State.LastJump:
                 rb.gravityScale = 0;
                 v_moveDir = Vector3.up * 8;
                 v_moveDir.Normalize();
                 cam.ChangeCamType(followCamera.E_type.closeup);
-
                 break;
+
             case E_State.Aviation:
                 rb.gravityScale = 0;
                 SPEED += f_Avitation_Accel_X;
@@ -214,6 +210,7 @@ public class PlayerControl : MonoBehaviour
                 rb.velocity = Vector2.zero;
                 rb.gravityScale = 3.5f;
                 rb.AddForce(new Vector2(-1, 1) * f_Attacked_Power, ForceMode2D.Impulse);
+                this.gameObject.layer = 9;
                 break;
 
             case E_State.End:
@@ -228,6 +225,7 @@ public class PlayerControl : MonoBehaviour
     {
         if (jumpCnt < 2 && ((int)state <= (int)E_State.JumpDown))
         {
+            Debug.Log("State(" + state + ")_Jump");
             anim.SetBool("isSlide", false);
             switch(jumpCnt)
             {
@@ -253,22 +251,31 @@ public class PlayerControl : MonoBehaviour
     }
     void DetectBoss()
     {
+        // UI_Distance -> Update()
+
         if (!b_Find)
         {
-            Vector3 temp = transform.position + Vector3.up;
-            Vector2 vPos = new Vector2(temp.x, temp.y);
-            RaycastHit2D hit = Physics2D.Raycast(vPos, Vector3.right, m_fDetect_Dist, 1 << LayerMask.NameToLayer("Monster"));
-            if (hit)
+            float dist = go_Target.transform.position.x - transform.position.x;
+            if(dist <= m_fDetect_Dist)
             {
-                //Debug.Log(hit.collider.gameObject.name);
-                if (hit.collider.gameObject.tag == "BOSS")
-                {
-                    b_Find = true;
-                    go_Target = hit.collider.gameObject;
-                    landPosition = go_Target.GetComponent<BossMonster>().goal.transform.position;
-                    ChangeState(E_State.LastJump);
-                }
+                b_Find = true;
+                ChangeState(E_State.RunUp);
             }
+            //Vector3 temp = transform.position;// + Vector3.up;
+            //Vector2 vPos = new Vector2(temp.x, temp.y);
+            //RaycastHit2D hit = Physics2D.Raycast(vPos, Vector3.right, m_fDetect_Dist, 1 << LayerMask.NameToLayer("Monster"));
+            //if (hit)
+            //{
+            //    Debug.Log(hit.collider.gameObject.name);
+            //    if (hit.collider.gameObject.tag == "BOSS")
+            //    {
+            //        b_Find = true;
+            //        go_Target = hit.collider.gameObject;
+            //        landPosition = go_Target.GetComponent<BossMonster>().goal.transform.position;
+            //        ChangeState(E_State.LastJump);
+            //        ChangeState(E_State.RunUp);
+            //    }
+            //}
         }
     }
     private void OnDrawGizmos()
@@ -296,7 +303,7 @@ public class PlayerControl : MonoBehaviour
             {
                 jumpCnt = 0;
                 if (state == E_State.Attacked) { ChangeState(E_State.End); }
-                else if (state != E_State.Stay) ChangeState(E_State.Run);
+                else if ((int)state < (int)E_State.Aviation) ChangeState(E_State.Run);
             }
             //Debug.Log("Collision [Player : " + transform.position + "/contacts : " + collision.contacts[0].point + "]");
         }

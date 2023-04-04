@@ -36,7 +36,7 @@ public class UI_Block : MonoBehaviour
         go_Block.SetActive(true);
         my_Btn.enabled = false;
     }
-    public void SetData(int idx)
+    public bool SetData(int idx)
     {
         try
         {
@@ -44,10 +44,12 @@ public class UI_Block : MonoBehaviour
             if (txt_Stage) txt_Stage.text = stage.name;
             ui_Stars.ShowStar(stage.getStar);
             SetPercentText();
+            return true;
         }
         catch
         {
             Debug.Log("아직 구현되지 않은 지역 입니다.");
+            return false;
         }
     }
     void SetPercentText()

@@ -11,7 +11,7 @@ public class BossMonster : MonoBehaviour
     // Start is called before the first frame update
     private void Awake()
     {
-        //Debug.Log("BossMonster.Awake");
+        Debug.Log("BossMonster.Awake");
         goal.transform.position = new Vector3(goal.transform.position.x, -1.3f, transform.position.z);
         StageManager.instance.go_Boss = this.gameObject;
     }

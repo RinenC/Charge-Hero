@@ -36,7 +36,7 @@ public class Companion : MonoBehaviour
     public void GetCompanion()
     {
         float dist = Vector3.Distance(player.transform.position, transform.position);
-        Debug.Log(dist);
+        //Debug.Log(dist);
         if(dist < 2.2f)
         {
             int atk = player.GetComponent<PlayerStatus>().ATK;

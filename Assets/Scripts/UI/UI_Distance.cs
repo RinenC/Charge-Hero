@@ -10,6 +10,7 @@ public class UI_Distance : MonoBehaviour
     public GameObject go_playerImg;
     public GameObject go_bossImg;
     public float multy;//배율
+    //public float dist;
     public float max_Dist;
     public float move_Dist;
     RectTransform rectTr;
@@ -40,11 +41,11 @@ public class UI_Distance : MonoBehaviour
         go_Boss = StageManager.instance.go_Boss;
 
         rectTr = go_playerImg.GetComponent<RectTransform>();
-        Vector3 v_Player = go_Player.transform.position;
-        Vector3 v_Boss = go_Boss.transform.position;
+        float v_Player = go_Player.transform.position.x;
+        float v_Boss = go_Boss.transform.position.x;
 
-        Vector3 v_dist = v_Player - v_Boss;
-        max_Dist = v_dist.magnitude;
+        float v_dist = v_Boss - v_Player;
+        max_Dist = v_dist;
 
         multy = 2000 / max_Dist;
         //ready = true;
@@ -54,11 +55,10 @@ public class UI_Distance : MonoBehaviour
     {
         if (this.gameObject.activeSelf)
         {
-            Vector3 v_Player = go_Player.transform.position;
-            Vector3 v_Boss = go_Boss.transform.position;
+            float v_Player = go_Player.transform.position.x;
+            float v_Boss = go_Boss.transform.position.x;
 
-            Vector3 v_dist = v_Player - v_Boss;
-            float dist = v_dist.magnitude;
+            float dist = v_Boss- v_Player;// v_dist.magnitude;
             move_Dist = max_Dist - dist;  // s 플레이어 이동 거리
 
             rectTr = go_playerImg.GetComponent<RectTransform>();//.localPosition += Vector3.right;// * Time.deltaTime;

@@ -133,6 +133,7 @@ public class GameManager : MonoBehaviour
             
             Init_StageInfo();
             Init_EnhanceInfo();
+            // 플레이어 정보 읽어오기
 
             SceneManager.sceneLoaded += LoadScene;
             //SceneManager.sceneUnloaded += UnLoadScene;
@@ -201,16 +202,20 @@ public class GameManager : MonoBehaviour
     public Enhance GetEnhanceInfo(E_Status type)
     {
         Enhance en = new Enhance();
+        en.Set(0, 0);
         switch (type)
         {
             case E_Status.HP:
-                en = en_HP[status.Lv_HP];
+                if(status.Lv_HP < en_HP.Length)
+                    en = en_HP[status.Lv_HP];
                 break;
             case E_Status.ATK:
-                en = en_ATK[status.Lv_ATK];
+                if (status.Lv_ATK < en_ATK.Length)
+                    en = en_ATK[status.Lv_ATK];
                 break;
             case E_Status.DEF:
-                en = en_DEF[status.Lv_DEF];
+                if (status.Lv_DEF < en_DEF.Length)
+                    en = en_DEF[status.Lv_DEF];
                 break;
         }
         return en;
@@ -289,11 +294,23 @@ public class GameManager : MonoBehaviour
     }
     void OpenStage()
     {
-        if(stage != 5 && (ply_Chapter == chapter) && stage == ply_Stage)
+        if (stage < 5)
         {
-            ply_Stage++;
+            stage++;
+            if (ply_Chapter == chapter) ply_Stage = stage;
         }
-        if (chapters[ply_Chapter - 1].isEnough) ply_Chapter++;
+        if (chapters[ply_Chapter - 1].isEnough)
+        {
+            ply_Chapter++;
+            ply_Stage = 1;
+            chapter = ply_Chapter;
+        }
+        //if(stage != 5 && (ply_Chapter == chapter) && stage == ply_Stage)
+        //{
+        //    stage++; // NextStage 버튼을 눌러도 다음 스테이지로 넘어가지 않음.
+        //    ply_Stage++;
+        //}
+        //if (chapters[ply_Chapter - 1].isEnough) ply_Chapter++;
         // TotalStar[Chapter].isEnough --> ply_Chatper++;
     }
     public Stage GetStageData()

@@ -102,9 +102,13 @@ public class GUIManager : MonoSingleton<MonoBehaviour>
                 ui_block_Managers[0].Activate_To(chap);
                 break;
             case E_Scene.STAGE:
-                ui_block_Managers[1].LinkData(GameManager.instance.chapter);
-                if (GameManager.instance.ply_Chapter > GameManager.instance.chapter) ui_block_Managers[1].Activate_ALL();
-                else ui_block_Managers[1].Activate_To(GameManager.instance.ply_Stage);
+                if (ui_block_Managers[1].LinkData(GameManager.instance.chapter))
+                {
+                    if (GameManager.instance.ply_Chapter > GameManager.instance.chapter) ui_block_Managers[1].Activate_ALL();
+                    else ui_block_Managers[1].Activate_To(GameManager.instance.ply_Stage);
+                }
+                else
+                    SceneChange(E_Scene.CHAPTER);
                 break;
             case E_Scene.PREPARE:
                 // Gold UI √ ±‚»≠ //

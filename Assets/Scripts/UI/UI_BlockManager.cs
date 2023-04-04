@@ -24,14 +24,15 @@ public class UI_BlockManager : MonoBehaviour
             list_ChildUI[i].Event_Able();
         }
     }
-    public void LinkData(int chapter)
+    public bool LinkData(int chapter)
     {
         for (int i =0; i<list_ChildUI.Length; i++)
         {
             int idx = GameManager.instance.GetIndex(chapter, i + 1);
             //Debug.Log("LinkData" + idx);
-            list_ChildUI[i].SetData(idx);
+            if (list_ChildUI[i].SetData(idx) == false) return false;
         }
+        return true;
     }
     public void Activate_ALL()
     {
