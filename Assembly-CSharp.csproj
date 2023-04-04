@@ -93,6 +93,7 @@
     <Compile Include="Assets\Scripts\BuffTimer.cs" />
     <Compile Include="Assets\Scripts\PlayerStatus.cs" />
     <Compile Include="Assets\Scripts\UI\UI_Enhance.cs" />
+    <Compile Include="Assets\Scripts\Ref_Sound.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

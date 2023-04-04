@@ -3,6 +3,8 @@ using UnityEngine.UI;
 
 public class SoundManager : MonoBehaviour
 {
+    public SoundManager instance;
+
     [Header("오디오")]
     [SerializeField] private AudioListener _master;
     [SerializeField] private Slider m_volume;
@@ -14,6 +16,21 @@ public class SoundManager : MonoBehaviour
     public AudioSource[] audio_BackGrounds;
     public AudioSource[] audio_Effects;
 
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(this.gameObject);
+            // 소리 크기 값 읽어오기.
+        }
+        else
+            Destroy(this.gameObject);
+    }
+    public void Play(string name, float pitch =1.0f)
+    {
+        
+    }
     public void Mute_All(bool mute)
     {
         Mute_BG(mute);
