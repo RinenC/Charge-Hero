@@ -1,0 +1,22 @@
+[
+  {
+    "stat": 100,
+    "need_Gold": 200
+  },
+  {
+    "stat": 100,
+    "need_Gold": 350
+  },
+  {
+    "stat": 100,
+    "need_Gold": 550
+  },
+  {
+    "stat": 100,
+    "need_Gold": 850
+  },
+  {
+    "stat": 100,
+    "need_Gold": 1000
+  }
+]
