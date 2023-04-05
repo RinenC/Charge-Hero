@@ -50,11 +50,13 @@ public class DBLoader : MonoSingleton<DBLoader>
 
         var jsonStageDBFile = Resources.Load<TextAsset>("Database/StageDB");
         stagedb = JsonConvert.DeserializeObject<Stage[]>(jsonStageDBFile.ToString());
+
+        LoadSprite();
     }
 
     void Start()
     {
-        LoadSprite();
+        //LoadSprite();
     }
 
     // Quest { Type, Title, info, value }

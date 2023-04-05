@@ -135,7 +135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -207,8 +207,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63b5e62a0ece8824b9b7f911720a5e01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buffTime: 0
-  buffTimer: 0
-  type: 
+  buffTime: 5
   itemSprite: {fileID: 1052799332845000922}
-  timer: {fileID: 8723440105337962210}
+  txt_timer: {fileID: 8723440105337962210}

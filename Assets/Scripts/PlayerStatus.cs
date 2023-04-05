@@ -26,7 +26,7 @@ public class PlayerStatus : MonoBehaviour
     }
     public void Damaged(float dmg)
     {
-        if (!effect.INVICIBILLITY)
+        //if (!effect.INVICIBILLITY)
         {
             StageManager.instance.attacked_Cnt++;
             if (DEF > 0)
@@ -40,8 +40,12 @@ public class PlayerStatus : MonoBehaviour
                 GUIManager.instance.HP_UI.Remove();
             }
 
-            if (HP <= 0) control.ChangeState(PlayerControl.E_State.End);
-            else effect.Activate_Effect(PlayerEffect.E_effect.AttackedInvin);
+            if (HP <= 0)
+            {
+                control.anim.SetTrigger("doDie");
+                control.ChangeState(PlayerControl.E_State.End);
+            }
+            else effect.Call_InvincibleMode();
         }
     }
 }

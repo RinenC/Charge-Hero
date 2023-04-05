@@ -94,6 +94,7 @@ public class GUIManager : MonoSingleton<MonoBehaviour>
     }
     void SceneChange(E_Scene scene)
     {
+        SoundManager.instance.Event_ClickSound();
         this.cur_Scene = scene;
         switch (scene)
         {
@@ -164,15 +165,18 @@ public class GUIManager : MonoSingleton<MonoBehaviour>
     {
         SceneManager.LoadScene(GameManager.instance.map);
         //Event_OffResult();
+        SoundManager.instance.Event_ClickSound();
         Event_Quit_Window();
         //Event_Next();
     }
     public void Event_ShowSetting()
     {
+        SoundManager.instance.Event_ClickSound();
         list_Window[0].SetActive(!list_Window[0].activeSelf);
     }
     public void Event_PauseSetting()
     {
+        SoundManager.instance.Event_ClickSound();
         int idx = (int)E_Window.Setting_Play;
         list_Window[idx].SetActive(!list_Window[idx].activeSelf);
         if (list_Window[idx].activeSelf) Time.timeScale = 0f;
@@ -185,6 +189,7 @@ public class GUIManager : MonoSingleton<MonoBehaviour>
     }
     public void Event_ShowResult(int cnt, int gold, bool clear = true)// bool clear = true / false
     {
+        SoundManager.instance.Event_ClickSound();
         switch (clear)
         {
             case true:

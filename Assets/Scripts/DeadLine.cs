@@ -20,10 +20,8 @@ public class DeadLine : MonoBehaviour
         if(collision.gameObject.tag =="Player")
         {
             Debug.Log("DeadLine Contact");
-            collision.gameObject.GetComponent<PlayerControl>().Back();
             collision.gameObject.GetComponent<PlayerStatus>().Damaged(1);
-            collision.gameObject.GetComponent<PlayerControl>().ChangeState(PlayerControl.E_State.Stay);
-            GameManager.instance.followCam.ChangeCamType(followCamera.E_type.set);
+            collision.gameObject.GetComponent<PlayerControl>().Back();
         }
     }
 }

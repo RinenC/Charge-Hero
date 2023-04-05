@@ -17,8 +17,8 @@ public class UI_List : MonoBehaviour
         GameObject _prefab = Instantiate(go_Prefab, transform);
         go_list.Add(_prefab);
 
-        BuffTimer bufftimer = _prefab.GetComponent<BuffTimer>();
-        if (bufftimer) bufftimer.Init(type, value);
+        //BuffTimer bufftimer = _prefab.GetComponent<BuffTimer>();
+        //if (bufftimer) bufftimer.Init(type, value);
     }
     public void Remove()
     {

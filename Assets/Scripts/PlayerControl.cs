@@ -54,12 +54,13 @@ public class PlayerControl : MonoBehaviour
     
     float f_timer;
     Rigidbody2D rb;
-    Animator anim;
+    public Animator anim;
     SpriteRenderer sr;
     
 
     void Awake()
     {
+        //GameManager.SM
         jumpBtn = GUIManager.instance.jumpBtn.GetComponent<JumpButton>();
         jumpBtn.SetCb((flag) => isJumpBtnDown = flag);
         slideBtn = GUIManager.instance.slideBtn.GetComponent<SlideButton>();
@@ -166,6 +167,7 @@ public class PlayerControl : MonoBehaviour
         switch (state)
         {
             case E_State.Run:
+                SoundManager.instance.Event_RunSound();
                 anim.SetBool("isLand", false);
                 SPEED = f_Speed;
                 rb.gravityScale = GRAVITY;
@@ -181,6 +183,7 @@ public class PlayerControl : MonoBehaviour
                 break;
 
             case E_State.LastJump:
+                anim.SetTrigger("doLastJump");
                 rb.gravityScale = 0;
                 v_moveDir = Vector3.up * 8;
                 v_moveDir.Normalize();
@@ -188,8 +191,9 @@ public class PlayerControl : MonoBehaviour
                 break;
 
             case E_State.Aviation:
+                anim.SetBool("isSlide", false);
                 rb.gravityScale = 0;
-                SPEED += f_Avitation_Accel_X;
+                SPEED = f_Avitation_Accel_X;
                 //v_moveDir = Vector3.zero;
                 break;
 
@@ -199,6 +203,7 @@ public class PlayerControl : MonoBehaviour
                 break;
 
             case E_State.Attack:
+                anim.SetInteger("attackIndex", 1);
                 f_timer = 0;
                 Vector3 temp = landPosition - transform.position;
                 SPEED = temp.x * f_Accel;
@@ -206,6 +211,7 @@ public class PlayerControl : MonoBehaviour
                 break;
 
             case E_State.Attacked:
+                anim.SetInteger("attackIndex", 2);
                 SPEED = -1 * f_Attacked_Power;
                 rb.velocity = Vector2.zero;
                 rb.gravityScale = 3.5f;
@@ -225,6 +231,7 @@ public class PlayerControl : MonoBehaviour
     {
         if (jumpCnt < 2 && ((int)state <= (int)E_State.JumpDown))
         {
+            SoundManager.instance.Event_JumpSound();
             Debug.Log("State(" + state + ")_Jump");
             anim.SetBool("isSlide", false);
             switch(jumpCnt)
@@ -303,16 +310,24 @@ public class PlayerControl : MonoBehaviour
             {
                 jumpCnt = 0;
                 if (state == E_State.Attacked) { ChangeState(E_State.End); }
-                else if ((int)state < (int)E_State.Aviation) ChangeState(E_State.Run);
+
+                // 이걸 왜 넣었지?
+                //else if ((int)state < (int)E_State.Aviation) ChangeState(E_State.Run);
+                else if (state == E_State.JumpDown) ChangeState(E_State.Run);
             }
             //Debug.Log("Collision [Player : " + transform.position + "/contacts : " + collision.contacts[0].point + "]");
         }
     }
     public void Back() // 부활
     {
-        transform.position = v_BackPos;
+        if (state != E_State.End)
+        {
+            Debug.Log("Player back");
+            transform.position = v_BackPos;
+            ChangeState(E_State.Stay);
+            GameManager.instance.followCam.ChangeCamType(followCamera.E_type.set);
+        }
         //StartCoroutine(ReRun());
-        Debug.Log("Player back");
     }
     public IEnumerator ReRun() // 다시 달리기
     {

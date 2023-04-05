@@ -5,43 +5,58 @@ using UnityEngine.UI;
 
 public class BuffTimer : MonoBehaviour
 {
-    public float buffTimer;
-    public string type;
+    public float buffTime = 5;
+    float timer;
+    //public string type;
     public GameObject itemSprite;
-    public Text timer;
+    public Text txt_timer;
 
-    public void Init(string type, int value)
+    public void Init(string type)
     {
         SetSprite(type);
-        buffTimer = value;
+        //buffTime = value;
+    }
+    private void OnEnable()
+    {
+        timer = buffTime;
     }
     // Update is called once per frame
     void Update()
     {
         TimerStart();
     }
-
+    public void ResetTimer()
+    {
+        timer = buffTime;
+    }
     void TimerStart()
     {
-        timer.text = buffTimer.ToString("F1");
+        txt_timer.text = timer.ToString("F1");
 
-        if(buffTimer <= 0)
+        timer -= Time.deltaTime;
+        if (timer < 0)
         {
-            //buffTimer = buffTime;
-            Destroy(this.gameObject);
+            GameManager.instance.go_Player.GetComponent<PlayerEffect>().OffEffect();
+            gameObject.SetActive(false);
         }
 
-        else if(buffTimer > 0)
-        {
-            buffTimer -= Time.deltaTime;
-        }
+        //if(buffTimer <= 0)
+        //{
+        //    //buffTimer = buffTime;
+        //    //Destroy(this.gameObject);
+        //}
+
+        //else if(buffTimer > 0)
+        //{
+        //    buffTimer -= Time.deltaTime;
+        //}
     }
 
     void SetSprite(string type)
     {
         switch(type)
         {
-            case "Invincible":
+            case "Invincibility":
                 itemSprite.GetComponent<Image>().sprite = DBLoader.Instance.invincibleitem;
                 break;
             case "Aviation":

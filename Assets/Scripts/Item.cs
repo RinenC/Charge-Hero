@@ -6,7 +6,7 @@ public enum ItemType
 {
     Heal,
     Damage,
-    Invincible,
+    Invincibility,
     Aviation,
     ChangeCoin,
     Gold,
@@ -26,7 +26,7 @@ public class Item : MonoBehaviour
     GameObject go_Collider;
     private void Start()
     {
-
+        
     }
 
     private void Update()
@@ -42,6 +42,7 @@ public class Item : MonoBehaviour
     }
     void UseItem()
     {
+        SoundManager.instance.Event_GetItemSound();
         switch (curType)
         {
             case ItemType.Heal: // 鳃
@@ -58,16 +59,12 @@ public class Item : MonoBehaviour
                 go_Collider.GetComponent<PlayerStatus>().ATK += value;
                 break;
 
-            case ItemType.Invincible:// 公利
+            case ItemType.Invincibility:// 公利
                 go_Collider.GetComponent<PlayerEffect>().Activate_Effect(PlayerEffect.E_effect.ItemInvin, value);
-                //CreateTimer(curType);
-                GUIManager.instance.BUFF_UI.Add("Invincible", value);
                 break;
 
             case ItemType.Aviation:// 厚青 + 公利 + 磊籍(榜靛父?)
                 go_Collider.GetComponent<PlayerEffect>().Activate_Effect(PlayerEffect.E_effect.Avitaton, value);
-                //CreateTimer(curType);
-                GUIManager.instance.BUFF_UI.Add("Aviation", value);
                 break;
 
             case ItemType.ChangeCoin:

@@ -4,22 +4,22 @@ using UnityEngine;
 
 public class Ref_Sound
 {
-//    AudioSource[] _audioSources = new AudioSource[10]; // 용도를 나누어서 만들어 놓자.
-//    // mp3 audiosource를 담을 배열 선언
+    //    AudioSource[] _audioSources = new AudioSource[10]; // 용도를 나누어서 만들어 놓자.
+    //    // mp3 audiosource를 담을 배열 선언
 
-//    // 캐싱 역할을 할 _audioClips 딕션어리 
-//    // 캐싱은 사운드를 재생할때마다 계속 path를 입력받아 사운드를 찾는 방식이 아닌 한번 사용한 사운드는 딕셔너리로 관리하여 보다 빠르게 처리하기 위해서 캐싱용 딕션너리를 사용하는 것이다.
-//    Dictionary<string, AudioClip> _audioClips = new Dictionary<string, AudioClip>();
+    //    // 캐싱 역할을 할 _audioClips 딕션어리 
+    //    // 캐싱은 사운드를 재생할때마다 계속 path를 입력받아 사운드를 찾는 방식이 아닌 한번 사용한 사운드는 딕셔너리로 관리하여 보다 빠르게 처리하기 위해서 캐싱용 딕션너리를 사용하는 것이다.
+    //    Dictionary<string, AudioClip> _audioClips = new Dictionary<string, AudioClip>();
 
-//    public void init()
-//    {
-//        GameObject root = GameObject.Find("@Sound");
-//        if (root == null)
-//        {
-//            root = new GameObject { name = "@Sound" };
-//            Object.DontDestroyOnLoad(root);
+    public void init()
+    {
+        GameObject root = GameObject.Find("@Sound");
+        if (root == null)
+        {
+            root = new GameObject { name = "@Sound" };
+            Object.DontDestroyOnLoad(root);
 
-//            string[] soundNames = System.Enum.GetNames(typeof(Define.Sound));
+            //string[] soundNames = System.Enum.GetNames(typeof(Define.Sound));
 
 //            for (int i = 0; i < soundNames.Length - 1; i++)
 //            {
@@ -30,9 +30,9 @@ public class Ref_Sound
 //            // soundName을 돌면서 새로운 GameObject를 만들어준다.
 
 //            _audioSources[(int)Define.Sound.Bgm].loop = true; // Bgm같은 경우에는 루프로 계속 사운드가 나도록 해준다.
-//        }
+        }
 
-//    }
+    }
 
 //    public void Clear()
 //    {

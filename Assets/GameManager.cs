@@ -88,12 +88,16 @@ public class Stage
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+    //static GameManager Instance { get { return instance; } }
     [Header("바로가기")]
     public followCamera followCam;
     public GameObject player_prefab;
     public GameObject go_Player;
     public GameObject go_Boss;
-    
+    //static StageManager _sm;
+    //public static StageManager SM { get { return GameManager._sm; } }
+    //public BuffManager buffManager;
+
     [Header("플레이어 기본 능력치")]
     public Status status;
     public int n_Gold;
@@ -141,25 +145,6 @@ public class GameManager : MonoBehaviour
     }
     void Init_StageInfo()
     {
-        // 파일을 읽어온다.
-        // 몇 줄인지 확인한다.
-        // stages = new Stage[lines];
-        //stages = new Stage[5];
-        //// 데이터를 할당한다.
-        //stages[0] = new Stage();
-        //stages[0].Init(0, "1-1", 0, 0, false, 2000, 500, 1);
-
-        //stages[1] = new Stage();
-        //stages[1].Init(1, "1-2", 0, 0, false, 2200, 1000, 1);
-
-        //stages[2] = new Stage();
-        //stages[2].Init(2, "1-3", 0, 0, false, 2400, 1500, 1);
-
-        //stages[3] = new Stage();
-        //stages[3].Init(3, "1-4", 0, 0, false, 2600, 2000, 1);
-
-        //stages[4] = new Stage();
-        //stages[4].Init(4, "1-5", 0, 0, false, 2800, 2500, 1);
         stages = DBLoader.Instance.stagedb;
 
         chapters = new Chapter[1];//3
@@ -174,27 +159,6 @@ public class GameManager : MonoBehaviour
     }
     void Init_EnhanceInfo()
     {
-        //// HP //
-        //en_HP = new Enhance[5];
-        //en_HP[0].Set(1, 2000);
-        //en_HP[1].Set(1, 4000);
-        //en_HP[2].Set(1, 6000);
-        //en_HP[3].Set(1, 8000);
-        //en_HP[4].Set(1, 10000);
-        //// ATK //
-        //en_ATK = new Enhance[5];
-        //en_ATK[0].Set(100, 200);
-        //en_ATK[1].Set(100, 350);
-        //en_ATK[2].Set(200, 550);
-        //en_ATK[3].Set(200, 850);
-        //en_ATK[4].Set(200, 1000);
-        //// DEF //
-        //en_DEF = new Enhance[5];
-        //en_DEF[0].Set(1, 5000);
-        //en_DEF[1].Set(1, 10000);
-        //en_DEF[2].Set(1, 15000);
-        //en_DEF[3].Set(1, 20000);
-        //en_DEF[4].Set(1, 25000);
         en_HP = DBLoader.Instance.hpenhance;
         en_ATK = DBLoader.Instance.atkenhance;
         en_DEF = DBLoader.Instance.defenhance;
@@ -244,6 +208,11 @@ public class GameManager : MonoBehaviour
         Init_StageInfo();
         Init_EnhanceInfo();
         // 플레이어 정보 읽어오기
+
+        //Ref_Sound ref_Sound = new Ref_Sound();
+        //ref_Sound.init();
+        //buffManager = new BuffManager();
+        //buffManager.Init();
     }
     public void GetChapter(int _chapter)
     {
