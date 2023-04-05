@@ -41,7 +41,8 @@ public class UI_Block : MonoBehaviour
         try
         {
             stage = GameManager.instance.stages[idx];
-            if (txt_Stage) txt_Stage.text = stage.name;
+            if (txt_Stage) txt_Stage.text =
+                    string.Format($"<b><color=white>{stage.name}</color></b>");
             ui_Stars.ShowStar(stage.getStar);
             SetPercentText();
             return true;

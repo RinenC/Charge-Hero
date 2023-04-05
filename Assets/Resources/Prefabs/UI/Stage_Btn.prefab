@@ -66,8 +66,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: 4b1885f5416f3c741ac0815952921840, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -374,8 +374,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: 7b03ca51eb13fef46ad379e25bc1bb4b, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -595,7 +595,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 1-1
+  m_Text: <b><color=white>1</color></b>
 --- !u!1 &8449545744952526909
 GameObject:
   m_ObjectHideFlags: 0
@@ -606,7 +606,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8449545744952526906}
   - component: {fileID: 8449545744952526905}
-  - component: {fileID: 400663041644209610}
   - component: {fileID: 6054362979160713058}
   - component: {fileID: 8449545744952526904}
   - component: {fileID: 8449545744952526907}
@@ -650,18 +649,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8449545744952526909}
   m_CullTransparentMesh: 1
---- !u!114 &400663041644209610
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8449545744952526909}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 593780b1e432c7c4f8f7b3c164e56fd9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6054362979160713058
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -715,7 +702,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 7ff78b329f164464ea5df9a3227b3f0d, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1

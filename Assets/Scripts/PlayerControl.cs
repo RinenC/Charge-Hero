@@ -163,6 +163,7 @@ public class PlayerControl : MonoBehaviour
     }
     public void ChangeState(E_State state)
     {
+        Debug.Log("ChangeState to " + state);
         this.state = state;
         switch (state)
         {
@@ -184,6 +185,7 @@ public class PlayerControl : MonoBehaviour
 
             case E_State.LastJump:
                 anim.SetTrigger("doLastJump");
+                gameObject.GetComponent<PlayerEffect>().OffEffect();
                 rb.gravityScale = 0;
                 v_moveDir = Vector3.up * 8;
                 v_moveDir.Normalize();

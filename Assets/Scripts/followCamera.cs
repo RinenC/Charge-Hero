@@ -85,7 +85,7 @@ public class followCamera : MonoBehaviour
             case E_type.set:
                 // if() °Å¸® == "°ª" --> ChangeType(normal)
                 transform.position += Vector3.right * m_fSpeed * Time.deltaTime;
-                if (transform.position.x - go_Player.transform.position.x >= 9)
+                if (transform.position.x - go_Player.transform.position.x >= 8)
                 {
                     ChangeCamType(E_type.normal);
                     StartCoroutine(go_Player.GetComponent<PlayerControl>().ReRun());

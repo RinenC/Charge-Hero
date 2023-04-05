@@ -271,7 +271,7 @@ public class GameManager : MonoBehaviour
         if (stage < 5)
         {
             stage++;
-            if (ply_Chapter == chapter) ply_Stage = stage;
+            if (ply_Chapter == chapter && ply_Stage < stage) ply_Stage = stage;
         }
         if (chapters[ply_Chapter - 1].isEnough)
         {
