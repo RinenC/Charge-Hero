@@ -5127,8 +5127,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 579191558}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.5, z: 20}
-  m_LocalScale: {x: 30.867096, y: 30.867096, z: 30.867096}
+  m_LocalPosition: {x: 0.085, y: -1.5, z: 20}
+  m_LocalScale: {x: 32.734024, y: 30.867096, z: 30.867096}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 519420032}
@@ -5978,6 +5978,7 @@ MonoBehaviour:
   kill: 0
   attacked_Cnt: 0
   quests: []
+  questidx: 
 --- !u!4 &867201391
 Transform:
   m_ObjectHideFlags: 0

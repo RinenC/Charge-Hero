@@ -114,6 +114,12 @@ public class DBLoader : MonoSingleton<DBLoader>
     {
         var userInfo = new SaveInfo();
 
+        #region GameManager
+        userInfo.n_Gold = GameManager.instance.n_Gold;
+        userInfo.ply_Chapter = GameManager.instance.ply_Chapter;
+        userInfo.ply_Stage = GameManager.instance.ply_Stage;
+        #endregion
+
         #region Status
         userInfo.Lv_HP = userStatus.Lv_HP;
         userInfo.Lv_ATK = userStatus.Lv_ATK;
@@ -183,6 +189,9 @@ public class DBLoader : MonoSingleton<DBLoader>
         GameManager.instance.status.hp = userSaveData.hp;
         GameManager.instance.status.atk = userSaveData.atk;
         GameManager.instance.status.def_cnt = userSaveData.def_cnt;
+        GameManager.instance.n_Gold = userSaveData.n_Gold;
+        GameManager.instance.ply_Chapter = userSaveData.ply_Chapter;
+        GameManager.instance.ply_Stage = userSaveData.ply_Stage;
 
         //userInfo.userStageInfoList = GameManager.instance.stages.Select
         for (int i = 0; i < userSaveData.userStageInfoList.Count; i++)
@@ -208,6 +217,13 @@ public class DBLoader : MonoSingleton<DBLoader>
             public float percent;
             public bool isClear;
         }
+
+        #region GameManager
+        public int n_Gold;
+        public int ply_Chapter;
+        public int ply_Stage;
+
+        #endregion
 
         #region Status
         public int Lv_HP;

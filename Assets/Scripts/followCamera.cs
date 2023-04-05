@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
-using UnityEditor.U2D.Path.GUIFramework;
+//using UnityEditor.Experimental.GraphView;
+//using UnityEditor.U2D.Path.GUIFramework;
 using UnityEngine;
 
 public class followCamera : MonoBehaviour

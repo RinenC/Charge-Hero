@@ -263,8 +263,8 @@ public class GameManager : MonoBehaviour
     public void GameEnd()
     {
         StageManager.instance.CheckQuest();
-        DBLoader.Instance.SaveTest();
         OpenStage();
+        DBLoader.Instance.SaveTest();
     }
     void OpenStage()
     {
