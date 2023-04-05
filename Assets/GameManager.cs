@@ -58,23 +58,23 @@ public class Stage
     public int first_Gold;
     public int repeat_Gold;
     public int bossHP;
-    public int questType;
+    public string questType;
     // 생성자를 만들자.
-    public void Init(int idx, string stage, int getStar, float per, bool clear, int gold, int HP, int questType)
-    {
-        this.idx = idx;
-        this.getStar = getStar;
-        this.percent = per;
-        this.isClear = clear;
-        this.first_Gold = gold;
-        this.bossHP= HP;
-        this.questType = questType;
+    //public void Init(int idx, string stage, int getStar, float per, bool clear, int gold, int HP, int questType)
+    //{
+    //    this.idx = idx;
+    //    this.getStar = getStar;
+    //    this.percent = per;
+    //    this.isClear = clear;
+    //    this.first_Gold = gold;
+    //    this.bossHP= HP;
+    //    this.questType = questType;
 
-        this.name = stage;
-        // idx 로 계산해서 할당하는 것 보다
-        // 그냥 String 값을 읽어 오는게 더 좋을까?
-        this.repeat_Gold = first_Gold - 1000;
-    }
+    //    this.name = stage;
+    //    // idx 로 계산해서 할당하는 것 보다
+    //    // 그냥 String 값을 읽어 오는게 더 좋을까?
+    //    this.repeat_Gold = first_Gold - 1000;
+    //}
     public void Update_Info(int cnt, float percent, bool kill)
     {
         repeat = true;
@@ -263,6 +263,7 @@ public class GameManager : MonoBehaviour
     public void GameEnd()
     {
         StageManager.instance.CheckQuest();
+        DBLoader.Instance.SaveTest();
         OpenStage();
     }
     void OpenStage()

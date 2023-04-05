@@ -12,6 +12,7 @@ public class DBLoader : MonoSingleton<DBLoader>
     private const string jsonAtkEnhanceFilePath = "AtkEnhance";
     private const string jsonDefEnhanceFilePath = "DefEnhance";
     private const string jsonStageDBFilePath = "StageDB";
+    private const string jsonQuestDBFilePath = "QuestDB";
 
     static string UserInfoFilePath;
 
@@ -28,6 +29,7 @@ public class DBLoader : MonoSingleton<DBLoader>
     public Enhance[] atkenhance;
     public Enhance[] defenhance;
     public Stage[] stagedb;
+    public Quest[] questdb;
 
     [Header("세이브 공간")]
     public Stage[] savedata;
@@ -50,6 +52,9 @@ public class DBLoader : MonoSingleton<DBLoader>
 
         var jsonStageDBFile = Resources.Load<TextAsset>("Database/StageDB");
         stagedb = JsonConvert.DeserializeObject<Stage[]>(jsonStageDBFile.ToString());
+
+        var jsonQuestDBFile = Resources.Load<TextAsset>("Database/QuestDB");
+        questdb = JsonConvert.DeserializeObject<Quest[]>(jsonQuestDBFile.ToString());
 
         LoadSprite();
     }

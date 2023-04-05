@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,7 +22,8 @@ public class StageManager : MonoBehaviour
     public int attacked_Cnt;
     
     public Quest[] quests;
-    
+    public int[] questidx;
+
     private void Awake()
     {
         Debug.Log("StageManager_Awake");
@@ -36,16 +38,24 @@ public class StageManager : MonoBehaviour
     }
     public void Set()
     {
+        //8,8,8
         stage = GameManager.instance.GetStageData();
+        string[] tmp = stage.questType.Split(',');
+        questidx = System.Array.ConvertAll<string, int>(tmp, int.Parse);
+
         go_Boss.GetComponent<BossMonster>().HP = stage.bossHP;
         GUIManager.instance.SetUI();
 
         quests = new Quest[3];
 
-        // Quest 받아오기 //
-        quests[0] = QuestManager.instance.GetQuest(0);
-        quests[1] = QuestManager.instance.GetQuest(1);
-        quests[2] = QuestManager.instance.GetQuest(4);
+        for (int i = 0; i < quests.Length; i++)
+        {
+            quests[i] = Array.Find(QuestManager.instance.Arr_Quest, x => x.idx == questidx[i]);
+        }
+        //// Quest 받아오기 //
+        //quests[0] = QuestManager.instance.GetQuest(0);
+        //quests[1] = QuestManager.instance.GetQuest(1);
+        //quests[2] = QuestManager.instance.GetQuest(4);
     }
     // Start is called before the first frame update
     void Start()

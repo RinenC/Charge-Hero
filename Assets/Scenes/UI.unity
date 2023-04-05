@@ -1218,7 +1218,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &273619060
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8669,7 +8669,7 @@ CanvasRenderer:
   m_CullTransparentMesh: 1
 --- !u!95 &1373765768
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -8686,7 +8686,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1 &1384548463
 GameObject:
   m_ObjectHideFlags: 0
@@ -9339,7 +9339,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1495398612
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9651,6 +9651,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1384548470}
         m_TargetAssemblyTypeName: GUIManager, Assembly-CSharp
         m_MethodName: Event_Quit_Window
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1662245320}
+        m_TargetAssemblyTypeName: DBLoader, Assembly-CSharp
+        m_MethodName: LoadTest
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10167,6 +10179,7 @@ MonoBehaviour:
   atkenhance: []
   defenhance: []
   stagedb: []
+  questdb: []
   savedata: []
   m_sSaveFileDirectory: 
   m_sSaveFileName: GameData.json
@@ -11254,6 +11267,7 @@ MonoBehaviour:
   kill: 0
   attacked_Cnt: 0
   quests: []
+  questidx: 
 --- !u!4 &1835304312
 Transform:
   m_ObjectHideFlags: 0
