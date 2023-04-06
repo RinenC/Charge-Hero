@@ -8,15 +8,95 @@
     "need_Gold": 350
   },
   {
-    "stat": 100,
+    "stat": 200,
     "need_Gold": 550
   },
   {
-    "stat": 100,
+    "stat": 200,
     "need_Gold": 850
   },
   {
-    "stat": 100,
+    "stat": 200,
     "need_Gold": 1000
+  },
+  {
+    "stat": 200,
+    "need_Gold": 1250
+  },
+  {
+    "stat": 200,
+    "need_Gold": 1500
+  },
+  {
+    "stat": 200,
+    "need_Gold": 1750
+  },
+  {
+    "stat": 200,
+    "need_Gold": 2000
+  },
+  {
+    "stat": 200,
+    "need_Gold": 2250
+  },
+  {
+    "stat": 200,
+    "need_Gold": 2500
+  },
+  {
+    "stat": 200,
+    "need_Gold": 2750
+  },
+  {
+    "stat": 200,
+    "need_Gold": 3000
+  },
+  {
+    "stat": 200,
+    "need_Gold": 3250
+  },
+  {
+    "stat": 200,
+    "need_Gold": 3500
+  },
+  {
+    "stat": 200,
+    "need_Gold": 3750
+  },
+  {
+    "stat": 200,
+    "need_Gold": 4000
+  },
+  {
+    "stat": 200,
+    "need_Gold": 4250
+  },
+  {
+    "stat": 200,
+    "need_Gold": 4500
+  },
+  {
+    "stat": 200,
+    "need_Gold": 4750
+  },
+  {
+    "stat": 200,
+    "need_Gold": 5000
+  },
+  {
+    "stat": 200,
+    "need_Gold": 5250
+  },
+  {
+    "stat": 200,
+    "need_Gold": 5500
+  },
+  {
+    "stat": 200,
+    "need_Gold": 5750
+  },
+  {
+    "stat": 200,
+    "need_Gold": 6000
   }
 ]

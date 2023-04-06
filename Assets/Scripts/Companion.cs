@@ -35,7 +35,7 @@ public class Companion : MonoBehaviour
 
     public void GetCompanion()
     {
-        float dist = Vector3.Distance(player.transform.position, transform.position);
+        float dist = Vector2.Distance(player.transform.position, transform.position);
         //Debug.Log(dist);
         if(dist < 2.2f)
         {
