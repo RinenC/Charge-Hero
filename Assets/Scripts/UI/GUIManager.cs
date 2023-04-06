@@ -317,6 +317,11 @@ public class GUIManager : MonoSingleton<MonoBehaviour>
                 break;
         }
     }
+
+    public void SaveData()
+    {
+        DBLoader.Instance.SaveTest();
+    }
     //public void HPBar()
     //{
     //    if (GameManager.instance.go_Player.GetComponent<PlayerStatus>().HP < hpList.Count) //데미지 받았을 때

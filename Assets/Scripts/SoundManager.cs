@@ -69,6 +69,8 @@ public class SoundManager : MonoBehaviour
         BGMAudioControl();
         EffectSlider.value = effectVolume;
         EffectAudioControl();
+
+        DBLoader.Instance.LoadSoundTest();
     }
     public void PlayBGM(string name)
     {

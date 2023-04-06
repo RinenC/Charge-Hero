@@ -110,6 +110,15 @@ public class DBLoader : MonoSingleton<DBLoader>
         if(userSaveData != null) SetUserData(userSaveData);
     }
 
+    [Button]
+    public void LoadSoundTest()
+    {
+        var userSaveData = LoadUserData();
+        Debug.Log(JsonConvert.SerializeObject(userSaveData, Formatting.Indented));
+
+        if (userSaveData != null) SetSoundData(userSaveData);
+    }
+
     public void SaveUserInfo(Status userStatus, params Stage[] stages)
     {
         var userInfo = new SaveInfo();
@@ -118,6 +127,12 @@ public class DBLoader : MonoSingleton<DBLoader>
         userInfo.n_Gold = GameManager.instance.n_Gold;
         userInfo.ply_Chapter = GameManager.instance.ply_Chapter;
         userInfo.ply_Stage = GameManager.instance.ply_Stage;
+        #endregion
+
+        #region SoundManager
+        userInfo.masterVolume = SoundManager.instance.MasterSlider.value;
+        userInfo.bgmVolume = SoundManager.instance.BGM_Slider.value;
+        userInfo.effectVolume = SoundManager.instance.EffectSlider.value;
         #endregion
 
         #region Status
@@ -148,6 +163,7 @@ public class DBLoader : MonoSingleton<DBLoader>
             userStageInfo.getStar = stage.getStar;
             userStageInfo.percent = stage.percent;
             userStageInfo.isClear = stage.isClear;
+            userStageInfo.repeat = stage.repeat;
 
             userInfo.userStageInfoList.Add(userStageInfo);
         }
@@ -204,7 +220,15 @@ public class DBLoader : MonoSingleton<DBLoader>
             tmp.getStar = userStageInfo.getStar;
             tmp.percent = userStageInfo.percent;
             tmp.isClear = userStageInfo.isClear;
+            tmp.repeat = userStageInfo.repeat;
         }
+    }
+
+    public void SetSoundData(SaveInfo userSaveData)
+    {
+        SoundManager.instance.MasterSlider.value = userSaveData.masterVolume;
+        SoundManager.instance.BGM_Slider.value = userSaveData.bgmVolume;
+        SoundManager.instance.EffectSlider.value = userSaveData.effectVolume;
     }
 
     [System.Serializable]
@@ -216,13 +240,19 @@ public class DBLoader : MonoSingleton<DBLoader>
             public int getStar;
             public float percent;
             public bool isClear;
+            public bool repeat;
         }
 
         #region GameManager
         public int n_Gold;
         public int ply_Chapter;
         public int ply_Stage;
+        #endregion
 
+        #region SoundManager
+        public float masterVolume;
+        public float bgmVolume;
+        public float effectVolume;
         #endregion
 
         #region Status
