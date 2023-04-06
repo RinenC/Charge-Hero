@@ -33,12 +33,14 @@ public class BossMonster : MonoBehaviour
             //go_Player.GetComponent<PlayerControl>().
             if (HP > go_Player.GetComponent<PlayerStatus>().ATK)
             {
+                SoundManager.instance.PlayEffect("Attacked");
                 // 보스의 공격하는 Animation 추가 //
                 go_Player.GetComponent<PlayerControl>().ChangeState(PlayerControl.E_State.Attacked);
                 StageManager.instance.kill = false;
             }
             else
             {
+                SoundManager.instance.PlayEffect("Attack");
                 StageManager.instance.kill = true;
                 // 보스의 공격 당하는 Animation 추가 //
             }

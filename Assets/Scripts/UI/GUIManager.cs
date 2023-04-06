@@ -35,6 +35,7 @@ public class GUIManager : MonoSingleton<MonoBehaviour>
     public Text txt_Atk;
     // UI_HP //
     public UI_List HP_UI;
+    public UI_List HP_Back_UI;
     // UI_Shield //
     public UI_List SHIELD_UI;
     
@@ -134,7 +135,7 @@ public class GUIManager : MonoSingleton<MonoBehaviour>
         switch (scene)
         {
             case E_Scene.TITLE:
-                //ToggleBackGround();
+                SoundManager.instance.PlayBGM("TitleBGM");
                 break;
             case E_Scene.CHAPTER:
                 SoundManager.instance.PlayBGM("SceneBGM");
@@ -144,7 +145,7 @@ public class GUIManager : MonoSingleton<MonoBehaviour>
                 //SetResolutions();
                 break;
             case E_Scene.STAGE:
-                //SetResolutions();
+                SoundManager.instance.PlayBGM("SceneBGM");
                 if (ui_block_Managers[1].LinkData(GameManager.instance.chapter))
                 {
                     if (GameManager.instance.ply_Chapter > GameManager.instance.chapter) ui_block_Managers[1].Activate_ALL();
@@ -164,31 +165,29 @@ public class GUIManager : MonoSingleton<MonoBehaviour>
                 //SetResolutions();
                 break;
             case E_Scene.PLAY:
-                SoundManager.instance.PlayBGM("PlayBGM");
-                // HP UI 초기화 //
-                HP_UI.Init(GameManager.instance.status.hp);
-                // Shield UI 초기화 //
-                SHIELD_UI.Init(GameManager.instance.status.def_cnt);
-
-                // ATK UI 초기화 //
-                txt_Atk.text = string.Format("{0:#,###}", GameManager.instance.status.atk);
-                //SetResolutions();
+                //SoundManager.instance.PlayBGM("PlayBGM");
                 break;
         }
         ShowScene();
     }
     void ToggleBackGround(bool val)
     {
-        //for(int i =0;i<list_BackGround.Count;i++)
-        //{
-        //    list_BackGround[i].SetActive(val);
-        //}
+        for (int i = 0; i < list_BackGround.Count; i++)
+        {
+            list_BackGround[i].SetActive(val);
+        }
     }
     public void SetUI()
     {
         ui_Dist.Set();
         bossHP_UI.Set();
         // To Do
+        HP_UI.Init(GameManager.instance.status.hp);
+        HP_Back_UI.Init(GameManager.instance.status.hp);
+        // Shield UI 초기화 //
+        SHIELD_UI.Init(GameManager.instance.status.def_cnt);
+
+        txt_Atk.text = string.Format("{0:#,###}", GameManager.instance.status.atk);
     }
     public void Event_EnterStage()
     {
@@ -228,14 +227,28 @@ public class GUIManager : MonoSingleton<MonoBehaviour>
     {
         SoundManager.instance.PlayEffect("Click");
         list_Window[0].SetActive(!list_Window[0].activeSelf);
+        if (list_Window[1].activeSelf) list_Window[1].SetActive(false);
     }
     public void Event_PauseSetting()
     {
         SoundManager.instance.PlayEffect("Click");
-        int idx = (int)E_Window.Setting_Play;
-        list_Window[idx].SetActive(!list_Window[idx].activeSelf);
-        if (list_Window[idx].activeSelf) Time.timeScale = 0f;
-        else Time.timeScale = 1f;
+        if (list_Window[0].activeSelf)
+        {
+            list_Window[0].SetActive(false);
+            list_Window[1].SetActive(false);
+            Time.timeScale = 1f;
+        }
+        else
+        {
+            list_Window[0].SetActive(true);
+            list_Window[1].SetActive(true);
+            Time.timeScale = 0f;
+        }
+
+        //int idx = (int)E_Window.Setting_Play;
+        //list_Window[idx].SetActive(!list_Window[idx].activeSelf);
+        //if (list_Window[idx].activeSelf) Time.timeScale = 0f;
+        //else Time.timeScale = 1f;
     }
     public void Event_ShowSkill()
     {
@@ -244,7 +257,6 @@ public class GUIManager : MonoSingleton<MonoBehaviour>
     }
     public void Event_ShowResult(int cnt, int gold, bool clear = true)// bool clear = true / false
     {
-        SoundManager.instance.PlayEffect("Click");
         switch (clear)
         {
             case true:
@@ -259,6 +271,10 @@ public class GUIManager : MonoSingleton<MonoBehaviour>
     IEnumerator ShowResultWindow(int idx, int cnt, int gold)
     {
         yield return new WaitForSeconds(1);
+        if((E_Window)idx == E_Window.Clear)
+        {
+            SoundManager.instance.PlayEffect("Clear");
+        }
         list_Window[idx].SetActive(true);
         list_Window[idx].GetComponent<UI_Result>().Set(cnt, gold);
     }

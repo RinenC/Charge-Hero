@@ -28,11 +28,11 @@ public struct Enhance
 [Serializable]
 public class Chapter
 {
-    int stars;
+    public int stars;
     int need_Cnt = 10;
     public int total
     {
-        get { for (int i = 0; i < stages.Count; i++) stars += stages[i].getStar; return stars; }
+        get { stars = 0; for(int i = 0; i < stages.Count; i++)  stars += stages[i].getStar; return stars; }
     }
     public bool isEnough { get { return (total >= need_Cnt); } }
     public List<Stage> stages;
@@ -59,22 +59,6 @@ public class Stage
     public int repeat_Gold;
     public int bossHP;
     public string questType;
-    // 생성자를 만들자.
-    //public void Init(int idx, string stage, int getStar, float per, bool clear, int gold, int HP, int questType)
-    //{
-    //    this.idx = idx;
-    //    this.getStar = getStar;
-    //    this.percent = per;
-    //    this.isClear = clear;
-    //    this.first_Gold = gold;
-    //    this.bossHP= HP;
-    //    this.questType = questType;
-
-    //    this.name = stage;
-    //    // idx 로 계산해서 할당하는 것 보다
-    //    // 그냥 String 값을 읽어 오는게 더 좋을까?
-    //    this.repeat_Gold = first_Gold - 1000;
-    //}
     public void Update_Info(int cnt, float percent, bool kill)
     {
         repeat = true;
@@ -158,6 +142,8 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("GameManager_Awake");
             instance = this;
+
+            //DBLoader.Instance.LoadTest();
             player_prefab = Resources.Load<GameObject>("Prefabs/Player");
 
             SceneManager.sceneLoaded += LoadScene;
@@ -168,6 +154,7 @@ public class GameManager : MonoBehaviour
         else
             Destroy(this.gameObject);
     }
+    
     void Init_StageInfo()
     {
         stages = DBLoader.Instance.stagedb;
@@ -229,15 +216,10 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         Debug.Log("GameManager_Start");
-
         Init_StageInfo();
         Init_EnhanceInfo();
-        // 플레이어 정보 읽어오기
 
-        //Ref_Sound ref_Sound = new Ref_Sound();
-        //ref_Sound.init();
-        //buffManager = new BuffManager();
-        //buffManager.Init();
+        DBLoader.Instance.LoadTest();
     }
     public void GetChapter(int _chapter)
     {
@@ -256,24 +238,19 @@ public class GameManager : MonoBehaviour
                 //plusStat.Init();
                 break;
             default:
+                if (scene.name == "1-5")
+                {
+                    SoundManager.instance.PlayBGM("BossBGM");
+                }
+                else
+                {
+                    SoundManager.instance.PlayBGM("PlayBGM");
+                }
                 SetPlayer();// 굳이 동적 할당 해야할까? //
                 StageManager.instance.Set();
                 break;
         }
     }
-    //public void UnLoadScene(Scene scene)//, Scene nextScene)
-    //{
-    //    //Debug.Log(scene.name + "를 UnLoad 합니다.");
-    //    switch (scene.name)//Load 하는 Scene 이름.
-    //    {
-    //        case "UI":
-
-    //            break;
-    //        default:
-
-    //            break;
-    //    }
-    //}
     public void SetPlayer()
     {
         // Player Prefab 생성 및 배치.
@@ -304,13 +281,6 @@ public class GameManager : MonoBehaviour
             ply_Stage = 1;
             chapter = ply_Chapter;
         }
-        //if(stage != 5 && (ply_Chapter == chapter) && stage == ply_Stage)
-        //{
-        //    stage++; // NextStage 버튼을 눌러도 다음 스테이지로 넘어가지 않음.
-        //    ply_Stage++;
-        //}
-        //if (chapters[ply_Chapter - 1].isEnough) ply_Chapter++;
-        // TotalStar[Chapter].isEnough --> ply_Chatper++;
     }
     public Stage GetStageData()
     {
@@ -319,65 +289,5 @@ public class GameManager : MonoBehaviour
         int chap = int.Parse(data[0]);
         int stage = int.Parse(data[1]);
         return stages[GetIndex(chap, stage)];
-    }
-
-    //public void Invincible()
-    //{
-    //    if (invincible)
-    //    {
-    //        if (invincibleTimer > 0)
-    //        {
-    //            invincibleTimer -= Time.deltaTime;
-    //        }
-    //        if (invincibleTimer <= 0)
-    //        {
-    //            invincibleTimer = invincibleTime;
-    //            invincible = false;
-    //        }
-    //    }
-    //}
-
-    //public void Aviation()
-    //{
-    //    if (aviation)
-    //    {
-    //        if (aviationTimer > 0)
-    //        {
-    //            aviationTimer -= Time.deltaTime;
-    //        }
-    //        if (aviationTimer <= 0)
-    //        {
-    //            aviationTimer = aviationTime;
-    //            if (effected)
-    //            {
-    //                go_Player.GetComponent<PlayerControl>().f_Speed -= 2;
-    //                effected = false;
-    //            }
-    //            aviation = false;
-    //        }
-    //    }
-    //}
-
-    //public void Magnetic()
-    //{
-    //    if (magnetic)
-    //    {
-    //        if (magneticTimer > 0)
-    //        {
-    //            magneticTimer -= Time.deltaTime;
-    //        }
-    //        if (magneticTimer <= 0)
-    //        {
-    //            magneticTimer = magneticTime;
-    //            magnetic = false;
-    //        }
-    //    }
-    //}
-
-    // Update is called once per frame
-    void Update()
-    {
-        //Invincible();
-        //Aviation();
     }
 }

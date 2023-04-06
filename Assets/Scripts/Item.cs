@@ -45,7 +45,7 @@ public class Item : MonoBehaviour
         switch (curType)
         {
             case ItemType.Heal: // Èú
-                if (go_Collider.GetComponent<PlayerStatus>().HP < 10)
+                if (go_Collider.GetComponent<PlayerStatus>().HP < GameManager.instance.status.hp)
                 {
                     go_Collider.GetComponent<PlayerStatus>().HP += value;
                     GUIManager.instance.HP_UI.Add();

@@ -70,7 +70,6 @@ public class UI_Distance : MonoBehaviour
             rectTr.anchoredPosition = new Vector2(x, rectTr.anchoredPosition.y);
             if (rectTr.anchoredPosition.x >= 1800)
             {
-
                 rectTr.anchoredPosition = new Vector2(1800, rectTr.anchoredPosition.y);
                 return;
             }

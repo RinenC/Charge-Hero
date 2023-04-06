@@ -12,20 +12,17 @@ public class SoundManager : MonoBehaviour
     public Slider EffectSlider;
     public AudioMixer audioMixer;
 
+    // 초기 값 //
+    public float masterVolume;
+    public float bgmVolume;
+    public float effectVolume;
 
     public AudioSource BG_AudioSource;
     public AudioSource Effect_AudioSource;
-    //public AudioSource Player_Run_AudioSource;
 
     Dictionary<string, AudioClip> _audioClips = new Dictionary<string, AudioClip>();
     enum BGMSound { TitleBGM, SceneBGM, PlayBGM, BossBGM }
-    enum EffectSound { Click, Jump, GetCoin } // Enhance, Hit
-    public AudioClip Jump_Clip;
-    public AudioClip GetItem_Clip;
-    public AudioClip Click_Clip;
-    public AudioClip Attack_Clip;
-    public AudioClip Run_Clip;
-    public AudioClip BackGround_Clip;
+    enum EffectSound { Click, Jump, GetCoin, Enhance, Attack, Attacked, Fail, Clear } 
 
     private void Awake()
     {
@@ -33,15 +30,19 @@ public class SoundManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(this.gameObject);
-            // 소리 크기 값 읽어오기.
-            string[] bgmNames = System.Enum.GetNames(typeof(BGMSound));
-            AudioClip audioclip = null;// Resources.Load<AudioClip>()
+            AudioClip audioclip = null;
+
+            // BGM AudioClip Set //
+            string[] bgmNames = System.Enum.GetNames(typeof(BGMSound));            
             for (int i = 0; i < bgmNames.Length; i++)
             {
                 string path = string.Format($"Sound/{bgmNames[i]}");
                 audioclip = Resources.Load<AudioClip>(path);
                 _audioClips.Add(bgmNames[i], audioclip);
             }
+            BG_AudioSource.loop = true;
+
+            // Effect AudioClip Set //
             string[] effectNames = System.Enum.GetNames(typeof(EffectSound));
             for (int i = 0; i < effectNames.Length; i++)
             {
@@ -49,12 +50,25 @@ public class SoundManager : MonoBehaviour
                 audioclip = Resources.Load<AudioClip>(path);
                 _audioClips.Add(effectNames[i], audioclip);
             }
-
-            BG_AudioSource.loop = true;
-            PlayBGM("TitleBGM");
         }
         else
             Destroy(this.gameObject);
+    }
+    private void Start()
+    {
+        // Volume 초기값 설정 //
+        // DB 에서 바로 읽기
+        // 저장할 때 각 Slider.value 저장.
+        masterVolume = -20f;
+        bgmVolume = -20f;
+        effectVolume = -20f;
+
+        MasterSlider.value = masterVolume;
+        MasterAudioControl();
+        BGM_Slider.value = bgmVolume;
+        BGMAudioControl();
+        EffectSlider.value = effectVolume;
+        EffectAudioControl();
     }
     public void PlayBGM(string name)
     {
@@ -64,8 +78,13 @@ public class SoundManager : MonoBehaviour
         BG_AudioSource.clip = temp;
         BG_AudioSource.Play();
     }
+    public void OffBGM()
+    {
+        BG_AudioSource.Stop();
+    }    
     public void PlayEffect(string name)
     {
+        //Debug.Log("Play[" + name + "]Effect");
         AudioClip temp = null;
         _audioClips.TryGetValue(name, out temp);
         //Effect_AudioSource.clip = temp;
@@ -75,9 +94,9 @@ public class SoundManager : MonoBehaviour
     public void MasterAudioControl()
     {   // 일단 Slide 별로 함수 만들고 나중에 병합.
         float sound = MasterSlider.value;
-
         if (sound == -40f) audioMixer.SetFloat("Master", -80f);
         else audioMixer.SetFloat("Master", sound);
+        audioMixer.GetFloat("Master", out sound);
     }
     public void BGMAudioControl()
     {   // 일단 Slide 별로 함수 만들고 나중에 병합.
@@ -96,46 +115,46 @@ public class SoundManager : MonoBehaviour
     public void ToggleAudioVolume()
     {
         AudioListener.volume = AudioListener.volume == 0 ? 1 : 0;
-    }
-    public void Play(string name, float pitch = 1.0f)
-    {
-        //audio_Effects[0].Pause();
-        //audio_Effects[0].Play();
-        //audio_Effects[0].PlayOneShot();
-        //audio_Effects[0].
-    }
-    public void Event_ClickSound()
-    {
-        //AudioSource audioS = new AudioSource();
-        //audioS.PlayOneShot(audioClip);
-        Effect_AudioSource.clip = Click_Clip;
-        Effect_AudioSource.Play();
-    }
-    public void Event_JumpSound()
-    {
-        //Event_RunSound_Stop();
+    //}
+    //public void Play(string name, float pitch = 1.0f)
+    //{
+    //    //audio_Effects[0].Pause();
+    //    //audio_Effects[0].Play();
+    //    //audio_Effects[0].PlayOneShot();
+    //    //audio_Effects[0].
+    //}
+    //public void Event_ClickSound()
+    //{
+    //    //AudioSource audioS = new AudioSource();
+    //    //audioS.PlayOneShot(audioClip);
+    //    Effect_AudioSource.clip = Click_Clip;
+    //    Effect_AudioSource.Play();
+    //}
+    //public void Event_JumpSound()
+    //{
+    //    //Event_RunSound_Stop();
 
-        Effect_AudioSource.clip = Jump_Clip;
-        Effect_AudioSource.Play();
-    }
-    //public void Event_RunSound()
-    //{
-    //    Player_Run_AudioSource.Play();
+    //    Effect_AudioSource.clip = Jump_Clip;
+    //    Effect_AudioSource.Play();
     //}
-    //public void Event_RunSound_Stop()
+    ////public void Event_RunSound()
+    ////{
+    ////    Player_Run_AudioSource.Play();
+    ////}
+    ////public void Event_RunSound_Stop()
+    ////{
+    ////    Player_Run_AudioSource.Pause();
+    ////}
+    //public void Event_GetItemSound()
     //{
-    //    Player_Run_AudioSource.Pause();
+    //    Effect_AudioSource.clip = GetItem_Clip;
+    //    Effect_AudioSource.Play();
     //}
-    public void Event_GetItemSound()
-    {
-        Effect_AudioSource.clip = GetItem_Clip;
-        Effect_AudioSource.Play();
-    }
-    public void Mute_All(bool mute)
-    {
+    //public void Mute_All(bool mute)
+    //{
         //Mute_BG(mute);
         //Mute_Effect(mute);
-    }
+    //}
     //public void Mute_BG(bool mute)
     //{
     //    for(int i = 0; i<audio_BackGrounds.Length; i++)
@@ -164,7 +183,5 @@ public class SoundManager : MonoBehaviour
     //            _effect.volume = e_volume.value;
     //            break;
     //    }        
-    //}
-
-
+    }
 }

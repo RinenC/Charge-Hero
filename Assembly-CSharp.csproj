@@ -87,6 +87,7 @@
     <Compile Include="Assets\Scripts\UI\UI_Block.cs" />
     <Compile Include="Assets\Scripts\UI\GUIManager.cs" />
     <Compile Include="Assets\Scripts\PlayerControl.cs" />
+    <Compile Include="Assets\Scripts\UI\UI_BossHP.cs" />
     <Compile Include="Assets\Scripts\testFile.cs" />
     <Compile Include="Assets\Scripts\BackMove.cs" />
     <Compile Include="Assets\Scripts\UI\UI_BlockManager.cs" />
@@ -99,7 +100,6 @@
     <Compile Include="Assets\Scripts\BuffTimer.cs" />
     <Compile Include="Assets\Scripts\PlayerStatus.cs" />
     <Compile Include="Assets\Scripts\UI\UI_Enhance.cs" />
-    <Compile Include="Assets\Scripts\UI\UI_BossHP.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\JsonDotNet\link.xml" />

@@ -169,7 +169,7 @@ public class PlayerControl : MonoBehaviour
     }
     public void ChangeState(E_State state)
     {
-        Debug.Log("ChangeState to " + state);
+        //Debug.Log("ChangeState to " + state);
         this.state = state;
         switch (state)
         {
@@ -191,7 +191,15 @@ public class PlayerControl : MonoBehaviour
                 rb.gravityScale = DownGraviry;
                 break;
 
+            case E_State.RunUp:
+                GUIManager.instance.bossHP_UI.gameObject.SetActive(true);
+                rb.gravityScale = GRAVITY;
+                SPEED = f_Speed;
+                anim.SetBool("isLand", false);
+                break;
+
             case E_State.LastJump:
+                rb.velocity = new Vector2(SPEED, 0);//Last Scene Error 용
                 anim.SetTrigger("doLastJump");
                 gameObject.GetComponent<PlayerEffect>().OffEffect();
                 rb.gravityScale = 0;
@@ -243,7 +251,7 @@ public class PlayerControl : MonoBehaviour
         if (jumpCnt < 2 && ((int)state <= (int)E_State.JumpDown))
         {
             SoundManager.instance.PlayEffect("Jump");
-            Debug.Log("State(" + state + ")_Jump");
+            //Debug.Log("State(" + state + ")_Jump" + jumpCnt);
             anim.SetBool("isSlide", false);
             switch(jumpCnt)
             {
@@ -279,21 +287,6 @@ public class PlayerControl : MonoBehaviour
                 b_Find = true;
                 ChangeState(E_State.RunUp);
             }
-            //Vector3 temp = transform.position;// + Vector3.up;
-            //Vector2 vPos = new Vector2(temp.x, temp.y);
-            //RaycastHit2D hit = Physics2D.Raycast(vPos, Vector3.right, m_fDetect_Dist, 1 << LayerMask.NameToLayer("Monster"));
-            //if (hit)
-            //{
-            //    Debug.Log(hit.collider.gameObject.name);
-            //    if (hit.collider.gameObject.tag == "BOSS")
-            //    {
-            //        b_Find = true;
-            //        go_Target = hit.collider.gameObject;
-            //        landPosition = go_Target.GetComponent<BossMonster>().goal.transform.position;
-            //        ChangeState(E_State.LastJump);
-            //        ChangeState(E_State.RunUp);
-            //    }
-            //}
         }
     }
     private void OnDrawGizmos()
@@ -315,19 +308,22 @@ public class PlayerControl : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log(collision.gameObject.name);
+        //Debug.Log(collision.gameObject.name);
         if (collision.gameObject.tag == "Ground")
         {
             if (transform.position.y + y_offset > collision.contacts[0].point.y)
             {
-                jumpCnt = 0;
                 if (state == E_State.Attacked) { ChangeState(E_State.End); }
-
                 // 이걸 왜 넣었지?
                 //else if ((int)state < (int)E_State.Aviation) ChangeState(E_State.Run);
-                else if (state == E_State.JumpDown) ChangeState(E_State.Run);
+                else if (state == E_State.JumpDown)
+                {
+                    jumpCnt = 0;
+                    ChangeState(E_State.Run);
+                }
+
             }
-            //Debug.Log("Collision [Player : " + transform.position + "/contacts : " + collision.contacts[0].point + "]");
+            
         }
     }
     public void Back() // 부활

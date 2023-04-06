@@ -107,7 +107,7 @@ public class DBLoader : MonoSingleton<DBLoader>
         var userSaveData = LoadUserData();
         Debug.Log(JsonConvert.SerializeObject(userSaveData, Formatting.Indented));
 
-        SetUserData(userSaveData);
+        if(userSaveData != null) SetUserData(userSaveData);
     }
 
     public void SaveUserInfo(Status userStatus, params Stage[] stages)

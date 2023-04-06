@@ -109,7 +109,7 @@ public class StageManager : MonoBehaviour
                     break;
             }
         }
-
+        
         int reward_Gold = stage.repeat ? (int)(stage.repeat_Gold * ui_Dist.percent) : stage.first_Gold;
         GameManager.instance.n_Gold += reward_Gold;
         stage.Update_Info(clear_Cnt, ui_Dist.percent, kill);
