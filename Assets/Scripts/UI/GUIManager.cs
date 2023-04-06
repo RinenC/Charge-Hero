@@ -19,6 +19,7 @@ public class GUIManager : MonoSingleton<MonoBehaviour>
     E_Scene cur_Scene;
     [Header("_화면_")]
     public List<GameObject> list_Scene;
+    public List<GameObject> list_BackGround;
     public enum E_Window { Setting_Title, Setting_Play, Skill, Clear, Fail, GameOver, Pause }
     [Header("_창_")]
     public List<GameObject> list_Window;
@@ -40,7 +41,8 @@ public class GUIManager : MonoSingleton<MonoBehaviour>
     [Header("_편의성_")]
     public UI_Distance ui_Dist;
     // UI Buff //
-    public UI_List BUFF_UI;
+    //public UI_List BUFF_UI;
+    public UI_BossHP bossHP_UI;
 
     [Header("_강화_")]
     public Text txt_Gold;
@@ -119,14 +121,23 @@ public class GUIManager : MonoSingleton<MonoBehaviour>
             else
                 list_Scene[i].SetActive(false);
         }
+        ToggleBackGround(cur_Scene == E_Scene.TITLE || cur_Scene == E_Scene.PREPARE);
+        //if ()
+            
+        //else
+        //    ToggleBackGround(false);
     }
     void SceneChange(E_Scene scene)
     {
-        SoundManager.instance.Event_ClickSound();
+        SoundManager.instance.PlayEffect("Click");
         this.cur_Scene = scene;
         switch (scene)
         {
+            case E_Scene.TITLE:
+                //ToggleBackGround();
+                break;
             case E_Scene.CHAPTER:
+                SoundManager.instance.PlayBGM("SceneBGM");
                 //SetResolutions();
                 int chap = GameManager.instance.ply_Chapter;
                 ui_block_Managers[0].Activate_To(chap);
@@ -153,9 +164,7 @@ public class GUIManager : MonoSingleton<MonoBehaviour>
                 //SetResolutions();
                 break;
             case E_Scene.PLAY:
-                // Map 제목 제거 //
-                //txt_Map.text = GameManager.instance.map;
-                
+                SoundManager.instance.PlayBGM("PlayBGM");
                 // HP UI 초기화 //
                 HP_UI.Init(GameManager.instance.status.hp);
                 // Shield UI 초기화 //
@@ -168,9 +177,18 @@ public class GUIManager : MonoSingleton<MonoBehaviour>
         }
         ShowScene();
     }
+    void ToggleBackGround(bool val)
+    {
+        //for(int i =0;i<list_BackGround.Count;i++)
+        //{
+        //    list_BackGround[i].SetActive(val);
+        //}
+    }
     public void SetUI()
     {
-        ui_Dist.Set();   
+        ui_Dist.Set();
+        bossHP_UI.Set();
+        // To Do
     }
     public void Event_EnterStage()
     {
@@ -202,18 +220,18 @@ public class GUIManager : MonoSingleton<MonoBehaviour>
     {
         SceneManager.LoadScene(GameManager.instance.map);
         //Event_OffResult();
-        SoundManager.instance.Event_ClickSound();
+        SoundManager.instance.PlayEffect("Click");
         Event_Quit_Window();
         //Event_Next();
     }
     public void Event_ShowSetting()
     {
-        SoundManager.instance.Event_ClickSound();
+        SoundManager.instance.PlayEffect("Click");
         list_Window[0].SetActive(!list_Window[0].activeSelf);
     }
     public void Event_PauseSetting()
     {
-        SoundManager.instance.Event_ClickSound();
+        SoundManager.instance.PlayEffect("Click");
         int idx = (int)E_Window.Setting_Play;
         list_Window[idx].SetActive(!list_Window[idx].activeSelf);
         if (list_Window[idx].activeSelf) Time.timeScale = 0f;
@@ -226,7 +244,7 @@ public class GUIManager : MonoSingleton<MonoBehaviour>
     }
     public void Event_ShowResult(int cnt, int gold, bool clear = true)// bool clear = true / false
     {
-        SoundManager.instance.Event_ClickSound();
+        SoundManager.instance.PlayEffect("Click");
         switch (clear)
         {
             case true:

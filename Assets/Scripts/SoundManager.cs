@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Audio;
+using System.Collections.Generic;
 
 public class SoundManager : MonoBehaviour
 {
@@ -11,18 +12,14 @@ public class SoundManager : MonoBehaviour
     public Slider EffectSlider;
     public AudioMixer audioMixer;
 
-    //[Header("오디오")]
-    //[SerializeField] private AudioListener _master;
-    //[SerializeField] private Slider m_volume;
-    //[SerializeField] private AudioSource _back;
-    //[SerializeField] private Slider b_volume;
-    //[SerializeField] private AudioSource _effect;
-    //[SerializeField] private Slider e_volume;
 
     public AudioSource BG_AudioSource;
     public AudioSource Effect_AudioSource;
-    public AudioSource Player_Run_AudioSource;
+    //public AudioSource Player_Run_AudioSource;
 
+    Dictionary<string, AudioClip> _audioClips = new Dictionary<string, AudioClip>();
+    enum BGMSound { TitleBGM, SceneBGM, PlayBGM, BossBGM }
+    enum EffectSound { Click, Jump, GetCoin } // Enhance, Hit
     public AudioClip Jump_Clip;
     public AudioClip GetItem_Clip;
     public AudioClip Click_Clip;
@@ -37,19 +34,42 @@ public class SoundManager : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(this.gameObject);
             // 소리 크기 값 읽어오기.
-            //BG_AudioSource = new AudioSource();
-            BG_AudioSource.clip = BackGround_Clip;
+            string[] bgmNames = System.Enum.GetNames(typeof(BGMSound));
+            AudioClip audioclip = null;// Resources.Load<AudioClip>()
+            for (int i = 0; i < bgmNames.Length; i++)
+            {
+                string path = string.Format($"Sound/{bgmNames[i]}");
+                audioclip = Resources.Load<AudioClip>(path);
+                _audioClips.Add(bgmNames[i], audioclip);
+            }
+            string[] effectNames = System.Enum.GetNames(typeof(EffectSound));
+            for (int i = 0; i < effectNames.Length; i++)
+            {
+                string path = string.Format($"Sound/{effectNames[i]}");
+                audioclip = Resources.Load<AudioClip>(path);
+                _audioClips.Add(effectNames[i], audioclip);
+            }
+
             BG_AudioSource.loop = true;
-            BG_AudioSource.Play();
-
-            //Player_Run_AudioSource = new AudioSource();
-            Player_Run_AudioSource.clip = Run_Clip;
-            Player_Run_AudioSource.loop = true;
-
-            //Effect_AudioSource = new AudioSource();
+            PlayBGM("TitleBGM");
         }
         else
             Destroy(this.gameObject);
+    }
+    public void PlayBGM(string name)
+    {
+        BG_AudioSource.Stop();
+        AudioClip temp = null;
+        _audioClips.TryGetValue(name, out temp);
+        BG_AudioSource.clip = temp;
+        BG_AudioSource.Play();
+    }
+    public void PlayEffect(string name)
+    {
+        AudioClip temp = null;
+        _audioClips.TryGetValue(name, out temp);
+        //Effect_AudioSource.clip = temp;
+        Effect_AudioSource.PlayOneShot(temp);
     }
     // Slider value 읽고 쓰기 // 
     public void MasterAudioControl()
@@ -77,7 +97,7 @@ public class SoundManager : MonoBehaviour
     {
         AudioListener.volume = AudioListener.volume == 0 ? 1 : 0;
     }
-    public void Play(string name, float pitch =1.0f)
+    public void Play(string name, float pitch = 1.0f)
     {
         //audio_Effects[0].Pause();
         //audio_Effects[0].Play();
@@ -93,19 +113,19 @@ public class SoundManager : MonoBehaviour
     }
     public void Event_JumpSound()
     {
-        Event_RunSound_Stop();
+        //Event_RunSound_Stop();
 
         Effect_AudioSource.clip = Jump_Clip;
         Effect_AudioSource.Play();
     }
-    public void Event_RunSound()
-    {
-        Player_Run_AudioSource.Play();
-    }
-    public void Event_RunSound_Stop()
-    {
-        Player_Run_AudioSource.Pause();
-    }
+    //public void Event_RunSound()
+    //{
+    //    Player_Run_AudioSource.Play();
+    //}
+    //public void Event_RunSound_Stop()
+    //{
+    //    Player_Run_AudioSource.Pause();
+    //}
     public void Event_GetItemSound()
     {
         Effect_AudioSource.clip = GetItem_Clip;

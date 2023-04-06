@@ -28,6 +28,7 @@ public class PlayerControl : MonoBehaviour
     float SPEED;                        // 적용되는 속도
     Vector3 v_moveDir;                  // 상/하 이동 방향
     public Collider2D[] colliders;
+    float y_velocity;
 
     [Header("_JUMP_")]
     //public float deltaY;                // LastJump 시 이동 속도
@@ -136,6 +137,11 @@ public class PlayerControl : MonoBehaviour
                 break;
 
             case E_State.Aviation:
+                //y_velocity = isJumpBtnDown == true ? 1 : -1;
+                //if (transform.position.y >= max_Height) y_velocity = -1;
+                //else if (transform.position.y < y_base) y_velocity = 0;
+                //y_velocity *= f_Avitation_Accel_Y * 2;
+                //rb.velocity = new Vector2(1 * SPEED, y_velocity);
                 rb.velocity = new Vector2(1 * SPEED, 0);
                 v_moveDir = isJumpBtnDown == true ? Vector3.up : Vector3.down;// * 2;
                 if (transform.position.y >= max_Height) v_moveDir = Vector3.down;// * 2;
@@ -168,7 +174,9 @@ public class PlayerControl : MonoBehaviour
         switch (state)
         {
             case E_State.Run:
-                SoundManager.instance.Event_RunSound();
+                // 플레이어가 바닥을 뚫는거 방지
+                if(transform.position.y <y_base)
+                    transform.position = new Vector3(transform.position.x, y_base, transform.position.z);
                 anim.SetBool("isLand", false);
                 SPEED = f_Speed;
                 rb.gravityScale = GRAVITY;
@@ -194,6 +202,7 @@ public class PlayerControl : MonoBehaviour
 
             case E_State.Aviation:
                 anim.SetBool("isSlide", false);
+                rb.bodyType = RigidbodyType2D.Kinematic;
                 rb.gravityScale = 0;
                 SPEED = f_Avitation_Accel_X;
                 //v_moveDir = Vector3.zero;
@@ -233,7 +242,7 @@ public class PlayerControl : MonoBehaviour
     {
         if (jumpCnt < 2 && ((int)state <= (int)E_State.JumpDown))
         {
-            SoundManager.instance.Event_JumpSound();
+            SoundManager.instance.PlayEffect("Jump");
             Debug.Log("State(" + state + ")_Jump");
             anim.SetBool("isSlide", false);
             switch(jumpCnt)
@@ -306,6 +315,7 @@ public class PlayerControl : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        Debug.Log(collision.gameObject.name);
         if (collision.gameObject.tag == "Ground")
         {
             if (transform.position.y + y_offset > collision.contacts[0].point.y)

@@ -34,6 +34,10 @@ public class BuffManager : MonoBehaviour
         go.SetActive(false);
         go.transform.SetParent(transform, false);
     }
+    public void Reset()
+    {
+        buffs.gameObject.SetActive(false);
+    }
     public void TurnOnBuffTimer(E_BUFFTYPE buffname)
     {
         int idx = (int)buffname;

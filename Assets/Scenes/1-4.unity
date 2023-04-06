@@ -4956,7 +4956,7 @@ GameObject:
   - component: {fileID: 1012568145}
   - component: {fileID: 1012568144}
   - component: {fileID: 1012568143}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Ground
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -27894,7 +27894,7 @@ MonoBehaviour:
   HP_UI: {fileID: 0}
   SHIELD_UI: {fileID: 0}
   ui_Dist: {fileID: 0}
-  BUFF_UI: {fileID: 0}
+  bossHP_UI: {fileID: 0}
   txt_Gold: {fileID: 0}
   ui_Enhances: []
 --- !u!224 &1535554083

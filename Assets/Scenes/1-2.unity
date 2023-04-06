@@ -965,7 +965,7 @@ MonoBehaviour:
   HP_UI: {fileID: 0}
   SHIELD_UI: {fileID: 0}
   ui_Dist: {fileID: 0}
-  BUFF_UI: {fileID: 0}
+  bossHP_UI: {fileID: 0}
   txt_Gold: {fileID: 0}
   ui_Enhances: []
 --- !u!224 &538169471
@@ -6007,7 +6007,7 @@ GameObject:
   - component: {fileID: 1229332851}
   - component: {fileID: 1229332850}
   - component: {fileID: 1229332849}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Ground
   m_TagString: Ground
   m_Icon: {fileID: 0}

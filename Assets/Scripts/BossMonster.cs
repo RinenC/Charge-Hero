@@ -12,7 +12,7 @@ public class BossMonster : MonoBehaviour
     private void Awake()
     {
         Debug.Log("BossMonster.Awake");
-        goal.transform.position = new Vector3(goal.transform.position.x, -1.3f, transform.position.z);
+        goal.transform.position = new Vector3(transform.position.x + 5, -2.0f, transform.position.z);
         StageManager.instance.go_Boss = this.gameObject;
     }
     void Start()
@@ -42,6 +42,8 @@ public class BossMonster : MonoBehaviour
                 StageManager.instance.kill = true;
                 // 보스의 공격 당하는 Animation 추가 //
             }
+            HP -= go_Player.GetComponent<PlayerStatus>().ATK;
+            StartCoroutine(GUIManager.instance.bossHP_UI.HPUI((float)HP));
         }
     }
     void Kill_ThePlayer()

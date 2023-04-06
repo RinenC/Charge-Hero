@@ -42,7 +42,6 @@ public class Item : MonoBehaviour
     }
     void UseItem()
     {
-        SoundManager.instance.Event_GetItemSound();
         switch (curType)
         {
             case ItemType.Heal: // Èú
@@ -72,6 +71,7 @@ public class Item : MonoBehaviour
                 break;
 
             case ItemType.Gold: // °ñµå
+                SoundManager.instance.PlayEffect("GetCoin");
                 GameManager.instance.n_Gold += value;
                 break;
         }

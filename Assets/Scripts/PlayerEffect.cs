@@ -86,7 +86,7 @@ public class PlayerEffect : MonoBehaviour
         control.ChangeState(PlayerControl.E_State.Aviation);
         b_Effected[1] = true;
         go_Effects[1].SetActive(true);
-        this.gameObject.layer = 9;
+        this.gameObject.layer = 11; // 9 여도 상관 없을듯
     }
     void OnInvincibility()
     {
@@ -102,33 +102,9 @@ public class PlayerEffect : MonoBehaviour
             b_Effected[i] = false;
             go_Effects[i].SetActive(false);
         }
+        gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
         ChangeEffect(E_effect.None);
     }
-    //IEnumerator SetAvitaton(float time)
-    //{
-        
-        
-    //    yield return new WaitForSeconds(time);
-    //    for (int i = 0; i < 2; i++)
-    //    {
-    //        b_Effected[i] = false;
-    //        go_Effects[i].SetActive(false);
-    //    }
-        
-    //    this.gameObject.layer = 0;
-    //}
-    //IEnumerator SetInvincible(float time)
-    //{
-    //    Debug.Log("Start_Routin_INVINC");
-    //    b_Effected[(int)E_effect.ItemInvin] = true;
-    //    go_Effects[(int)E_effect.ItemInvin].SetActive(true);
-    //    this.gameObject.layer = 9;
-    //    yield return new WaitForSeconds(time);
-    //    b_Effected[(int)E_effect.ItemInvin] = false;
-    //    go_Effects[(int)E_effect.ItemInvin].SetActive(false);
-    //    this.gameObject.layer = 0;
-    //    Debug.Log("End_Routin_INVINC");
-    //}
     IEnumerator SetAttacked()
     {
         //Debug.Log("Invincibility_Start");
@@ -139,7 +115,7 @@ public class PlayerEffect : MonoBehaviour
             sr.color = colors[i % 2];
             yield return new WaitForSeconds(sec);
         }
-        this.gameObject.layer = 0;
+        if (curEffect == E_effect.None) this.gameObject.layer = 0;
         //Debug.Log("Invincibility_End");
     }
     void Avitation()

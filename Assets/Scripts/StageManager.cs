@@ -39,6 +39,7 @@ public class StageManager : MonoBehaviour
     public void Set()
     {
         //8,8,8
+        BuffManager.instance.Reset();// 버프 먹고 나간 뒤 다시 들어가면 타이머가 남아있는 현상
         stage = GameManager.instance.GetStageData();
         string[] tmp = stage.questType.Split(',');
         questidx = System.Array.ConvertAll<string, int>(tmp, int.Parse);
