@@ -8,6 +8,8 @@ public class BossMonster : MonoBehaviour
     public GameObject goal;
     public float HP;
     GameObject go_Player;
+    Animator anim;
+    SpriteRenderer sr;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -17,7 +19,8 @@ public class BossMonster : MonoBehaviour
     }
     void Start()
     {
-        //
+        anim = GetComponent<Animator>();
+        sr = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -43,6 +46,8 @@ public class BossMonster : MonoBehaviour
                 SoundManager.instance.PlayEffect("Attack");
                 StageManager.instance.kill = true;
                 // 보스의 공격 당하는 Animation 추가 //
+                anim.SetTrigger("doDie");
+                sr.color = Color.gray;
             }
             HP -= go_Player.GetComponent<PlayerStatus>().ATK;
             StartCoroutine(GUIManager.instance.bossHP_UI.HPUI((float)HP));

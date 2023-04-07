@@ -41,22 +41,25 @@ public class StageManager : MonoBehaviour
         //8,8,8
         BuffManager.instance.Reset();// 버프 먹고 나간 뒤 다시 들어가면 타이머가 남아있는 현상
         stage = GameManager.instance.GetStageData();
-        string[] tmp = stage.questType.Split(',');
-        questidx = System.Array.ConvertAll<string, int>(tmp, int.Parse);
+        Init();
 
         go_Boss.GetComponent<BossMonster>().HP = stage.bossHP;
         GUIManager.instance.SetUI();
 
+        string[] tmp = stage.questType.Split(',');
+        questidx = System.Array.ConvertAll<string, int>(tmp, int.Parse);
         quests = new Quest[3];
 
         for (int i = 0; i < quests.Length; i++)
         {
             quests[i] = Array.Find(QuestManager.instance.Arr_Quest, x => x.idx == questidx[i]);
         }
-        //// Quest 받아오기 //
-        //quests[0] = QuestManager.instance.GetQuest(0);
-        //quests[1] = QuestManager.instance.GetQuest(1);
-        //quests[2] = QuestManager.instance.GetQuest(4);
+    }
+    void Init()
+    {
+        rescue = 0;
+        kill = false;
+        attacked_Cnt = 0;
     }
     // Start is called before the first frame update
     void Start()

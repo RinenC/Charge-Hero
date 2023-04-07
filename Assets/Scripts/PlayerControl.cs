@@ -316,7 +316,7 @@ public class PlayerControl : MonoBehaviour
                 if (state == E_State.Attacked) { ChangeState(E_State.End); }
                 // 이걸 왜 넣었지?
                 //else if ((int)state < (int)E_State.Aviation) ChangeState(E_State.Run);
-                else if (state == E_State.JumpDown)
+                else if (state == E_State.JumpDown || state == E_State.Stay)
                 {
                     jumpCnt = 0;
                     ChangeState(E_State.Run);

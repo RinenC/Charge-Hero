@@ -39,7 +39,7 @@ public class UI_Distance : MonoBehaviour
         move_Dist = 0;
         go_Player = StageManager.instance.go_Player;
         go_Boss = StageManager.instance.go_Boss;
-
+        go_bossImg.GetComponent<Image>().sprite = Resources.Load<Sprite>("Image/Boss/" + go_Boss.name);
         rectTr = go_playerImg.GetComponent<RectTransform>();
         float v_Player = go_Player.transform.position.x;
         float v_Boss = go_Boss.transform.position.x;

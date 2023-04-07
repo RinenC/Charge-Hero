@@ -59,18 +59,16 @@ public class SoundManager : MonoBehaviour
         // Volume 초기값 설정 //
         // DB 에서 바로 읽기
         // 저장할 때 각 Slider.value 저장.
-        masterVolume = -20f;
-        bgmVolume = -20f;
-        effectVolume = -20f;
+        //masterVolume = -20f;
+        //bgmVolume = -20f;
+        //effectVolume = -20f;
 
-        MasterSlider.value = masterVolume;
+        //DBLoader.Instance.LoadSoundTest();
         MasterAudioControl();
-        BGM_Slider.value = bgmVolume;
         BGMAudioControl();
-        EffectSlider.value = effectVolume;
         EffectAudioControl();
 
-        DBLoader.Instance.LoadSoundTest();
+        
     }
     public void PlayBGM(string name)
     {

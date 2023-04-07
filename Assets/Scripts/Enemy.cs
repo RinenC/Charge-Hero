@@ -22,7 +22,7 @@ public class Enemy : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             collision.gameObject.GetComponent<PlayerStatus>().Damaged(Damage);
-            //StageManager.instance.attacked_Cnt++;
+            StageManager.instance.attacked_Cnt++;
         }
     }
 

@@ -107,10 +107,14 @@ public class DBLoader : MonoSingleton<DBLoader>
         var userSaveData = LoadUserData();
         Debug.Log(JsonConvert.SerializeObject(userSaveData, Formatting.Indented));
 
-        if(userSaveData != null) SetUserData(userSaveData);
+        if (userSaveData != null)
+        {
+            SetUserData(userSaveData);
+            SetSoundData(userSaveData);
+        }
     }
 
-    [Button]
+    [Button("사운드 데이터 로드")]
     public void LoadSoundTest()
     {
         var userSaveData = LoadUserData();
