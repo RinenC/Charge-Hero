@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   curType: 1
-  value: 10
+  value: 25
   moved: 0
   speed: 0
   buffTimer: {fileID: 5388301140137702288, guid: 6a64d27d3335b0842b291311b0656a3f, type: 3}

@@ -40,8 +40,8 @@ public class Companion : MonoBehaviour
         if(dist < 2.2f)
         {
             int atk = player.GetComponent<PlayerStatus>().ATK;
-            StartCoroutine(GUIManager.instance.NumberAnimation(atk + 5, atk, E_VALUE.ATK));
-            player.GetComponent<PlayerStatus>().ATK += 5;
+            StartCoroutine(GUIManager.instance.NumberAnimation(atk + 50, atk, E_VALUE.ATK));
+            player.GetComponent<PlayerStatus>().ATK += 50;
             //PlusStatus.instance.atk += 5;
             StageManager.instance.rescue += 1;
             Destroy(this.gameObject);
