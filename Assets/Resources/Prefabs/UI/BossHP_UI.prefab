@@ -296,6 +296,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect_BossHP: {fileID: 7116508780415309528}
   txt_HP: {fileID: 7116508779542855623}
+  bossImg: {fileID: 0}
 --- !u!114 &7116508780758168548
 MonoBehaviour:
   m_ObjectHideFlags: 0

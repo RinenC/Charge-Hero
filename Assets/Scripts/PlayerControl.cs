@@ -144,7 +144,7 @@ public class PlayerControl : MonoBehaviour
                 //rb.velocity = new Vector2(1 * SPEED, y_velocity);
                 rb.velocity = new Vector2(1 * SPEED, 0);
                 v_moveDir = isJumpBtnDown == true ? Vector3.up : Vector3.down;// * 2;
-                if (transform.position.y >= max_Height) v_moveDir = Vector3.down;// * 2;
+                if (transform.position.y >= max_Height && v_moveDir == Vector3.up) v_moveDir = Vector3.zero;// * 2;
                 transform.position += v_moveDir * f_Avitation_Accel_Y * 2 * Time.deltaTime;
                 if (transform.position.y < y_base)
                     transform.position = new Vector3(transform.position.x, y_base, transform.position.z);

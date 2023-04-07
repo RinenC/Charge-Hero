@@ -229,6 +229,14 @@ public class GameManager : MonoBehaviour
     {
         stage = _stage;
     }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            DBLoader.Instance.SaveTest();
+            Application.Quit();
+        }
+    }
     public void LoadScene(Scene scene, LoadSceneMode mode)
     {
         Debug.Log(scene.name + "를 Load 합니다.");

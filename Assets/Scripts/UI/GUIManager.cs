@@ -20,7 +20,7 @@ public class GUIManager : MonoSingleton<MonoBehaviour>
     [Header("_È­¸é_")]
     public List<GameObject> list_Scene;
     public List<GameObject> list_BackGround;
-    public enum E_Window { Setting_Title, Setting_Play, Skill, Clear, Fail, GameOver, Pause }
+    public enum E_Window { Setting_Title, Setting_Play, Skill, Clear, Fail, GameOver, Credit }
     [Header("_Ã¢_")]
     public List<GameObject> list_Window;
 
@@ -244,11 +244,11 @@ public class GUIManager : MonoSingleton<MonoBehaviour>
             list_Window[1].SetActive(true);
             Time.timeScale = 0f;
         }
-
-        //int idx = (int)E_Window.Setting_Play;
-        //list_Window[idx].SetActive(!list_Window[idx].activeSelf);
-        //if (list_Window[idx].activeSelf) Time.timeScale = 0f;
-        //else Time.timeScale = 1f;
+    }
+    public void Event_ShowCredit()
+    {
+        int idx = (int)E_Window.Credit;
+        list_Window[idx].SetActive(true);
     }
     public void Event_ShowSkill()
     {

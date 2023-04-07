@@ -5,9 +5,10 @@ using UnityEngine.UI;
 
 public class UI_BossHP : MonoBehaviour
 {
-   BossMonster bossMonster;
-   public RectTransform rect_BossHP;
-   public Text txt_HP;
+    BossMonster bossMonster;
+    public RectTransform rect_BossHP;
+    public Text txt_HP;
+    public Image bossImg;
     float maxHP;
     float maxWidth;
     private void Start()
@@ -18,6 +19,7 @@ public class UI_BossHP : MonoBehaviour
    {
         bossMonster = StageManager.instance.go_Boss.GetComponent<BossMonster>();
         maxHP = bossMonster.HP;
+        bossImg.sprite = Resources.Load<Sprite>("Image/Boss/" + bossMonster.gameObject.name);
         txt_HP.text = string.Format("{0:F0} / {1:F0}", maxHP, maxHP);
         rect_BossHP.sizeDelta = new Vector2(maxWidth, rect_BossHP.sizeDelta.y);
         //rect_BossHP
